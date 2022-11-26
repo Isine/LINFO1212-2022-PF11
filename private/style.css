@@ -1,0 +1,106 @@
+body {
+    font-family: 'Titillium Web', sans-serif;
+}
+
+/* HEADER */
+
+header {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+    grid-template-rows: 1fr;
+    backdrop-filter: blur(30px);
+    background-color: rgba(182, 182, 182, 0.2);
+    margin: unset;
+}
+
+.logo {
+    min-width: 50px;
+    width: 30%;
+}
+
+.title {
+    grid-column-start: 3;
+    grid-column-end: 3;
+    grid-row-start: 1;
+    grid-row-end: 1; 
+}
+
+#title_link {
+    text-decoration: none;
+    color:black;
+}
+
+#connexion {
+    grid-column-start: 5;
+    grid-column-end: 5;
+    grid-row-start: 1;
+    grid-row-end: 1;
+    height: 50%;
+    min-height: 5px;
+    min-width: 5px;
+    width: 100%;
+
+    margin-top: 20px;
+}
+
+.search {
+    grid-column-start: 5;
+    grid-column-end: 5;
+    grid-row-start: 1;
+    grid-row-end: 1;
+    display: flex;
+}
+
+#input_search {
+    width: 60%;
+}
+
+#button_search {
+    border: none;
+    border-radius: 5px;
+    font-size: 0.7rem;
+    text-align: center;
+    color: white;
+    cursor: pointer;
+    background-color: rgb(74, 68, 68);
+    text-shadow: 1px 1px 1px #000;
+    line-height: 2.5;
+    width: 30%;
+}
+
+#button_search:hover {
+    background-color: rgb(53, 49, 49);
+}
+
+/* REGISTER AND LOGIN */
+
+.cover {
+    width: 400px;
+    margin: 0 auto;
+}
+.mastfoot {
+    padding-top: 0px;
+    text-align: center;
+    margin: auto;
+}
+
+/* PROFIL */
+
+@media screen and (min-width: 700px) {
+    form {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+    }
+
+    div {
+        width: 100%;
+    }
+
+    .form>*:nth-child(1),
+
+    .form>*:nth-child(2){
+        width: 47%;
+    }
+
+}
