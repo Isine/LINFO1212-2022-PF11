@@ -21,20 +21,54 @@
 </head>
 
 <body>
-    <hr>
+    <hr>  
 
-    <ul>
-        <li>lien de vente</li>
-        <li>tableau de vente</li>
-        <li>barre de Recherche</li>
-        <li>tirer</li>
-    </ul>
+    <a href="/private/sell.html">Sell a syllabus</a>
     
     <div class="search">
-        <form action="/" method="get">
-          <input id="input_search" type="text" placeholder="Recherche" name="looking_for" required>
-  
-          <button id="button_search" type="submit" name="btn_search" value="searching">🔎</button>
-        </form>
-      </div>
+      <form action="/" method="get">
+        <input id="input_search" type="text" placeholder="Recherche" name="looking_for" required>
+        <button id="button_search" type="submit" name="btn_search" value="searching">🔎</button>
+      </form>
+    </div>
+
+    <select name="order">
+      <option value="" selected="selected" hidden="hidden">Order By</option>
+      <option value="dog">Name</option>
+      <option value="cat">Price</option>
+      <option value="hamster">Date</option>
+  </select>
+
+  <table align="center">
+    <tr>
+      <th>Image</th>
+      <th>Name</th>
+      <th>Price</th>
+    </tr>
+
+    <tr>
+      <td>
+        <img class="logo" src="images/ex.jpg" alt="SyllaExchange-Logo">
+      </td>
+      <td>
+        <p>Proba</p>
+      </td>
+      <td>
+        <input type="button" value="Acheter pour 25€" onclick="location.href='/private/buy.html';">
+      </td>
+    </tr>
+
+    <td>
+      <p>other image</p>
+    </td>
+    <td>
+      <p>appsinf</p>
+    </td>
+    <td>
+      <input type="button" value="Acheter pour 5€" onclick="location.href='/private/buy.html';">
+    </td>
+  </tr>
+  </table>
+
+
 </body>
