@@ -1,5 +1,8 @@
 body {
     font-family: 'Titillium Web', sans-serif;
+    background: url(/private/images/background.png);
+    background-repeat: no-repeat;
+    background-size: cover;
 }
 
 /* HEADER */
@@ -44,28 +47,35 @@ header {
 }
 
 .search {
-    grid-column-start: 5;
-    grid-column-end: 5;
-    grid-row-start: 1;
-    grid-row-end: 1;
+    position: absolute;
+    top: 150px;
+    right: 5px;
+    background-color: rgb(255, 255, 255,0.1s);
+    width: 300px;
+    height: 50px;
     display: flex;
+    align-items: center;
+    border-radius: 30px;
+    justify-content: center;
+    
 }
 
 #input_search {
     width: 60%;
+    height: 18px;
+    border-radius: 50px;
+    
 }
 
 #button_search {
     border: none;
-    border-radius: 5px;
-    font-size: 0.7rem;
-    text-align: center;
-    color: white;
+    border-radius: 30%;
     cursor: pointer;
     background-color: rgb(74, 68, 68);
     text-shadow: 1px 1px 1px #000;
-    line-height: 2.5;
+    height: 25px;
     width: 30%;
+    
 }
 
 #button_search:hover {
@@ -142,6 +152,141 @@ header {
     font-size: 36px;
     line-height: 21px;
     }
-  }  
+  } 
+  
+  
+  /* INDEX*/
+  .order{
+    position: absolute;
+    right: 50px;
+    top: 200px;
+  }
+  .catalogue{
+    position: relative;
+    left: 17%;
+    height: 400px;
+    width: 1200px;
+    margin: 100px;
+    backdrop-filter: blur(30px);
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    justify-content: space-between;
+    
+    
+  }
+  .items{
+    width: 200px;
+    height: 400px;
+    background-color: #e4fdc4;
+    border: 2px solid black;
+    border-radius: 30px;
+    display: flex; 
+    align-items: center;
+    flex-direction: column;
+    box-shadow: 2px 10px 12px rgb(53, 49, 49);
+  }
+  .books{
+    width: 100px;
+    height: 160px;
+    border: 2px solid black;
+    padding: 2px;
+    background-color: white;
+  }
+  .info{
+    font-size: 10px;
+    position: relative;
+    left: 40px;
+
+  }
+  .achter{
+    position: relative;
+    top: 15px;
+    border-radius: 30px;
+    width: 100px;
+    cursor: pointer;
+  }
+  .arrow{
+    cursor: pointer;
+  }
+/* BUY*/
+
+
+
+
+.selling{
+  position: relative;
+  left: 25%;
+  display: flex;
+  width: 600px;
+  height: 500px;
+  justify-content: space-between;
+}
+.txt{
+  background-color: #e4fdc4;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 300px;
+  
+  border: #000 1px solid;
+  border-left: none;
+  
+
+}
+.resume{
+  color: rgb(121,37,18);
+}
+.btnachter{
+  cursor: pointer;
+  border-radius: 30px;
+  border-top: none;
+}
+
+.Star{
+  position: relative;
+  left: 600px;
+}
+
+/* SELL*/
+.SellProduct{
+  background-color: white;
+  position: relative;
+  left: 38%;
+  display: flex;
+  flex-direction: column;
+  width: 500px;
+  border: 2px black solid;
+  
+}
+/* Profile*/
+.login_signup_form{
+  position: relative;
+  left: 38%;
+  width: 500px;
+  height: 400px;
+  background-image: linear-gradient(rgb(3, 3, 156),rgb(57, 68, 214));
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+  border-radius: 30px;
+  
+}
+.text{
+  text-decoration: underline;
+}
+
+.btn-success{
+  border: red 1px solid;
+  border-radius: 30px;
+  background-image: linear-gradient(yellow,orange);
+  cursor: pointer;
+  
+
+}
+  
+
+
   
   
