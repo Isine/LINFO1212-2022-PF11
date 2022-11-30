@@ -5,15 +5,14 @@
     <link rel="shortcut icon" href="images/logo.icon">
   
     <header>
-      <a href="/private/index.html">
+      <a href="/">
         <img class="logo" src="images/logo.png" alt="SyllaExchange-Logo">
       </a>
   
-      <h1 class="title"><a href="/private/index.html" id="title_link">SyllaExchange</a></h1>
+      <h1 class="title"><a href="/" id="title_link">SyllaExchange</a></h1>
   
-      <!--  <%=user %>  -->
       <!-- lien pour upload img: https://www.bezkoder.com/node-js-upload-image-mysql/ -->
-      <input type="button" value="connexion" id="connexion" onclick="location.href='/private/login.html';">
+      <input type="button" value=<%=user %> id="connexion" onclick="location.href='/login';">
   
     </header>
 </head>
@@ -21,8 +20,8 @@
 <body>
     <hr>
 
-    <form class="SellProduct">
-      <label for="title"> <strong>Titre:</strong>  </label>
+    <form class="SellProduct" action="/sell" method="post" enctype="multipart/form-data">
+      <label for="title"><strong>Titre:</strong></label>
       <input type="text" name="title" placeholder="Titre" required/>
 
       <label for="description"><strong>Description:</strong></label>
@@ -31,8 +30,8 @@
       <label for="price"><strong>Price:</strong></label>
       <input type="number" name="price" min="0" placeholder="Price" required/>
 
-      <label for="img"><strong>Image:</strong></label>
-      <input type="file" name="img" placeholder="Image" required/>
+      <label for="image"><strong>Image:</strong></label>
+      <input type="file" name="image" placeholder="Image" required/>
 
       <div class="star-rating">
         <input type="radio" name="stars" id="star-a" value="5"/>
@@ -47,7 +46,7 @@
         <input type="radio" name="stars" id="star-d" value="2"/>
         <label for="star-d"></label>
 
-        <input type="radio" name="stars" id="star-e" value="1"/>
+        <input type="radio" name="stars" id="star-e" value="1" required/>
         <label for="star-e"></label>
       </div>
 

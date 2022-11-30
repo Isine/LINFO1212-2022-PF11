@@ -12,14 +12,13 @@
   <link rel="shortcut icon" href="images/logo.icon">
 
   <header>
-    <a href="/private/index.html">
+    <a href="/">
       <img class="logo" src="images/logo.png" alt="SyllaExchange-Logo">
     </a>
 
-    <h1 class="title"><a href="/private/index.html" id="title_link">SyllaExchange</a></h1>
-
-    <!--  <%=user %>  -->
-    <input type="button" value="connexion" id="connexion" onclick="location.href='/private/login.html';">
+    <h1 class="title"><a href="/" id="title_link">SyllaExchange</a></h1>
+    
+    <input type="button" value="connexion" id="connexion" onclick="location.href='/login';">
 
   </header>
 </head>
@@ -52,20 +51,20 @@
                   <label class="control-label" for="password_confirm">Password (Confirm)</label>
                   <input type="password" id="password_confirm" name="password_confirm" placeholder="Confirm password" class="form-control" required/>
                   
-                  <button class="btn btn-success">Register</button>
+                  <button class="btn btn-success" name="btn" value="register">Register</button>
                 </fieldset>
               </form>
             </div>
 
             <div id="pane2" class="tab-pane fade">
               <form role="form" action="" method="POST">
-                <label for="exampleInputEmail1">Email address</label>
-                <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Enter email" />
+                <label for="email">Email address</label>
+                <input type="email" class="form-control" name="email" id="email" placeholder="Enter email" />
                 
-                <label for="exampleInputPassword1">Password</label>
-                <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password" />
+                <label for="password">Password</label>
+                <input type="password" class="form-control" name="password" id="password" placeholder="Password" />
                 
-                <button type="submit" class="btn btn-success">Login</button>
+                <button type="submit" class="btn btn-success" name="btn" value="login">Login</button>
               </form>          
             </div>
           </div>
