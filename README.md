@@ -1,6 +1,4 @@
-# LINFO1212-2022-PF11
-
-# LINFO1212 - Projet d'approfondissement en sciences informatiques - FixMyLouv
+# LINFO1212 - 2022 - Projet d'approfondissement en sciences informatiques - SyllaExchange
 
 ## Outils nécessaire :
 - Executeur de commande
@@ -35,3 +33,5 @@ Lorsque l'installation est terminer, il vous suffit d'executer la commande: "nod
 - Senisi Lobo Marco
 - Schul Louis
 - Daiki Marouane
+
+### Groupe: PF11
