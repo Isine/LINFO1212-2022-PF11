@@ -219,12 +219,11 @@ const DBOperations = {
         sequelize.sync();
     },
 
-    GetImageLinkByID: async function(ArtID){
-        const imageFromID = await sequelize.query("SELECT image FROM articles WHERE id = ?", { replacements: [ArtID], type: QueryTypes.SELECT });
-
-        if (typeof imageFromID !== 'undefined' && typeof imageFromID[0] !== 'undefined' && typeof imageFromID[0]['image'] !== 'undefined') {
-            return imageFromID[0]["image"].replace("private", "");
-        }
+    GetArticleInfoByID: async function(artID){
+        const article = await sequelize.query("SELECT title, description, price, image, rate, date FROM articles WHERE id = ?", { replacements: [artID], type: QueryTypes.SELECT });
+        const sellerID = await sequelize.query("SELECT userId FROM articleUsers WHERE ArtId = ?", { replacements: [artID], type: QueryTypes.SELECT });
+    
+        return { title: article[0]["title"], desc: article[0]["description"], price: article[0]["price"], image: article[0]["image"].replace("private", ""), rate: article[0]["rate"], date: article[0]["date"], sellerID: sellerID[0]["userId"] };
     },
 
     GetAllArticleInfo: async function(){
@@ -239,6 +238,14 @@ const DBOperations = {
         }
 
         return allInfos.reverse();
+    },
+
+    isArtIDAvailable: async function(artID){
+        const existingArticle= await sequelize.query("SELECT COUNT(*) FROM articles WHERE id = ?", { replacements: [artID], type: QueryTypes.SELECT })
+
+        let amountArticle = JSON.stringify(existingArticle[0]).replace(/[^0-9]*/g, '');
+        
+        return amountArticle > 0 ? true : false;
     }
 }
 

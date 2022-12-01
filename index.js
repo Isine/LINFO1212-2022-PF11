@@ -61,7 +61,6 @@ app.get('/', async function (req, res, next) {
 
     const articleList = await DBop.GetAllArticleInfo();
 
-    console.log(articleList);
     res.render('index.ejs', { user: name, articleList: articleList });
     
 });
@@ -92,6 +91,29 @@ app.get('/sell', async function(req, res, next){
     if (req.session.userID) name = await DBop.GetUsernameByID(req.session.userID);
 
     res.render('sell.ejs', { user: name });
+});
+
+app.get('/buy', async function(req, res, next){
+    let name = "Connexion"
+    
+    if (req.session.userID) name = await DBop.GetUsernameByID(req.session.userID);
+    
+    if(!req.query.artID){ // page available only if artID is passed in the url
+        res.redirect("/");
+        return;
+    } 
+
+    await DBop.isArtIDAvailable(req.query.artID).then(async available => { // Display only if artID exists
+        if(available){
+            await DBop.GetArticleInfoByID(req.query.artID).then(async artInfo => {
+                await DBop.GetUsernameByID(artInfo.sellerID).then(sellerName => {
+                    res.render('buy.ejs', { user: name ,title: artInfo["title"] ,image: artInfo["image"] ,desc: artInfo["desc"] ,seller: sellerName ,rate: artInfo["rate"] ,price: artInfo["price"] });
+                })
+            });
+        } else {
+            res.redirect("/");
+        }
+    });
 });
 
 // APP POST
