@@ -1,6 +1,5 @@
 // Imports of packages
 const { Sequelize, DataTypes, Model, QueryTypes } = require('sequelize');
-
 // Creation of link with db
 const sequelize = new Sequelize({
     dialect: 'sqlite',
@@ -118,11 +117,11 @@ const DBOperations = {
     },
 
     LoginUser: async function (email, password) {
-        let userIDFromEmail = await sequelize.query("SELECT userId FROM emails WHERE email = ?", {replacements: [email], type: QueryTypes.SELECT});
-        
+        let userIDFromEmail = await sequelize.query("SELECT userId FROM emails WHERE email = ?", { replacements: [email], type: QueryTypes.SELECT });
+
         if (typeof userIDFromEmail !== 'undefined' && typeof userIDFromEmail[0] !== 'undefined' && typeof userIDFromEmail[0]['userId'] !== 'undefined') {
-            let passwordOfID = await sequelize.query("SELECT password FROM users WHERE id = ?", {replacements: [userIDFromEmail[0]['userId']], type: QueryTypes.SELECT});
-            
+            let passwordOfID = await sequelize.query("SELECT password FROM users WHERE id = ?", { replacements: [userIDFromEmail[0]['userId']], type: QueryTypes.SELECT });
+
             if (typeof passwordOfID !== 'undefined' && typeof passwordOfID[0] !== 'undefined' && typeof passwordOfID[0]['password'] !== 'undefined') {
                 if (passwordOfID[0]['password'] === password) {
                     return userIDFromEmail[0]['userId'];
@@ -146,7 +145,7 @@ const DBOperations = {
     },
 
     //Getters
-    GetUsernameByID: async function(id) {
+    GetUsernameByID: async function (id) {
         const usernameFromId = await sequelize.query("SELECT username FROM users WHERE id = ?", { replacements: [id], type: QueryTypes.SELECT });
 
         if (typeof usernameFromId !== 'undefined' && typeof usernameFromId[0] !== 'undefined' && typeof usernameFromId[0]['username'] !== 'undefined') {
@@ -154,7 +153,7 @@ const DBOperations = {
         }
     },
 
-    GetEmailByID: async function(id) {
+    GetEmailByID: async function (id) {
         const emailFromId = await sequelize.query("SELECT email FROM emails WHERE userId = ?", { replacements: [id], type: QueryTypes.SELECT });
 
         if (typeof emailFromId !== 'undefined' && typeof emailFromId[0] !== 'undefined' && typeof emailFromId[0]['email'] !== 'undefined') {
@@ -162,7 +161,7 @@ const DBOperations = {
         }
     },
 
-    GetMoneyByID: async function(id) {
+    GetMoneyByID: async function (id) {
         const moneyFromId = await sequelize.query("SELECT money FROM users WHERE id = ?", { replacements: [id], type: QueryTypes.SELECT });
 
         if (typeof moneyFromId !== 'undefined' && typeof moneyFromId[0] !== 'undefined' && typeof moneyFromId[0]['money'] !== 'undefined') {
@@ -171,37 +170,37 @@ const DBOperations = {
     },
 
     //SETTERS
-    SetNewUsername: async function(userID, newUsername){
+    SetNewUsername: async function (userID, newUsername) {
         await User.update(
-            {username: newUsername},
-            {where: { id: userID }}
+            { username: newUsername },
+            { where: { id: userID } }
         );
     },
 
-    SetNewMoney: async function(userID, newMoney){
+    SetNewMoney: async function (userID, newMoney) {
         await User.update(
-            {money: newMoney},
-            {where: { id: userID }}
+            { money: newMoney },
+            { where: { id: userID } }
         );
     },
 
-    SetNewEmail: async function(userID, newEmail){
+    SetNewEmail: async function (userID, newEmail) {
         await Email.update(
-            {email: newEmail},
-            {where: { userId: userID }}
+            { email: newEmail },
+            { where: { userId: userID } }
         );
     },
 
-    SetNewPassword: async function(userID, newPassword){
+    SetNewPassword: async function (userID, newPassword) {
         await User.update(
-            {password: newPassword},
-            {where: { id: userID }}
+            { password: newPassword },
+            { where: { id: userID } }
         );
     },
 
     //Article related
 
-    AddArticle: async function(userID, title, desc, price, image, stars, date){
+    AddArticle: async function (userID, title, desc, price, image, stars, date) {
         let newArticle = await Article.create({
             title: title,
             description: desc,
@@ -219,18 +218,18 @@ const DBOperations = {
         sequelize.sync();
     },
 
-    GetArticleInfoByID: async function(artID){
+    GetArticleInfoByID: async function (artID) {
         const article = await sequelize.query("SELECT title, description, price, image, rate, date FROM articles WHERE id = ?", { replacements: [artID], type: QueryTypes.SELECT });
         const sellerID = await sequelize.query("SELECT userId FROM articleUsers WHERE ArtId = ?", { replacements: [artID], type: QueryTypes.SELECT });
-    
+
         return { title: article[0]["title"], desc: article[0]["description"], price: article[0]["price"], image: article[0]["image"].replace("private", ""), rate: article[0]["rate"], date: article[0]["date"], sellerID: sellerID[0]["userId"] };
     },
 
-    GetAllArticleInfo: async function(){
+    GetAllArticleInfo: async function () {
         const articlesList = await Article.findAll();
 
         let allInfos = [];
-        for(let article of articlesList){
+        for (let article of articlesList) {
             artInfo = article.dataValues;
 
             let info = { id: artInfo.id, title: artInfo.title, desc: artInfo.description, price: artInfo.price, image: artInfo.image.replace("private", ""), rate: artInfo.rate, date: artInfo.date };
@@ -240,11 +239,11 @@ const DBOperations = {
         return allInfos.reverse();
     },
 
-    isArtIDAvailable: async function(artID){
-        const existingArticle= await sequelize.query("SELECT COUNT(*) FROM articles WHERE id = ?", { replacements: [artID], type: QueryTypes.SELECT })
+    isArtIDAvailable: async function (artID) {
+        const existingArticle = await sequelize.query("SELECT COUNT(*) FROM articles WHERE id = ?", { replacements: [artID], type: QueryTypes.SELECT })
 
         let amountArticle = JSON.stringify(existingArticle[0]).replace(/[^0-9]*/g, '');
-        
+
         return amountArticle > 0 ? true : false;
     }
 }

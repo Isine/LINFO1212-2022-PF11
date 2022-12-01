@@ -21,28 +21,41 @@
 <body>
   <hr>
 
-  <h2 class="Name"> <%= title %> </h2>
+  <h2 class="Name">
+    <%= title %>
+  </h2>
   <div class="selling">
-    <img class="imagedulivre" src=<%= image %> alt="Syllabus-image">
+    <img class="imagedulivre" src=<%=image %> alt="Syllabus-image">
     <div class="txt">
-      <input class="btnAchter" type="button" value="Acheter pour <%= price %> €">
-      <p class="resume"> <%= desc %> <hr width="100%" color="black"></p>
-      <h4 class="SELLER">Seller: </h4> <p> <%= seller %> </p>
+      <form action="" method="post">
+        <input type="hidden" name="sellerid" value=<%=sellerid %>>
+        <input type="hidden" name="id" value=<%=id %>>
+        <input type="hidden" name="price" value=<%=price %>>
+        <input class="btnAchter" type="submit" value="Acheter pour <%= price %> €">
+      </form>
+      <p class="resume">
+        <%= desc %>
+          <hr width="100%" color="black">
+      </p>
+      <h4 class="SELLER">Seller: </h4>
+      <p>
+        <%= seller %>
+      </p>
     </div>
   </div>
 
   <div class="Star">
     <% for(let i=0; i < rate; i++){ %>
-    
+
       <span class="fa fa-star checked"></span>
 
-    <% } %>
+      <% } %>
 
-    <% for (let j=0; j < 5 - rate; j++) { %>
+        <% for (let j=0; j < 5 - rate; j++) { %>
 
-      <span class="fa fa-star"></span>
+          <span class="fa fa-star"></span>
 
-    <% } %>
+          <% } %>
 
   </div>
 
