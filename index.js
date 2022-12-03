@@ -156,11 +156,16 @@ app.post("/login", async function (req, res) {
             }
         });
     }
-    res.redirect('/');
+    // Redirection si necessaire
+    let from = req.session.from
+    if (from === undefined) from = "";
+    console.log(from)
+    res.redirect("/" + from);
 });
 
 app.post("/profil", async function (req, res) {
     if (!req.session.userID) {
+        req.session.from = "profil"
         res.redirect('/login');
         return;
     }
@@ -201,6 +206,7 @@ app.post("/profil", async function (req, res) {
 
 app.post('/sell', upload.single('image'), async function (req, res) {
     if (!req.session.userID) {
+        req.session.from = "sell"
         res.redirect('/login');
     } else {
         let date = new Date();
@@ -213,7 +219,11 @@ app.post('/sell', upload.single('image'), async function (req, res) {
 
 app.post('/buy', async function (req, res) {
     const userID = req.session.userID
-    if (!userID) return res.redirect('/login');
+    if (!userID) {
+        let artid = req.body.id
+        req.session.from = "buy?artID=" + artid
+        return res.redirect('/login');
+    }
 
     const price = parseFloat(req.body.price)
 
