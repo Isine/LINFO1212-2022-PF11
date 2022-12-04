@@ -239,12 +239,52 @@ const DBOperations = {
         return allInfos.reverse();
     },
 
+    GetArticlesByName: async function () {
+        const articleListTitle = await Article.findAll({ order: ['title'] });
+
+        let allInfos = [];
+        for (let article of articleListTitle) {
+            artInfo = article.dataValues;
+
+            let info = { id: artInfo.id, title: artInfo.title, desc: artInfo.description, price: artInfo.price, image: artInfo.image.replace("private", ""), rate: artInfo.rate, date: artInfo.date };
+            allInfos.push(info);
+        }
+
+        return allInfos;
+    },
+
+    GetArticleByPrice: async function () {
+        const articleListPrice = await Article.findAll({ order: ['title'] });
+
+        let allInfos = [];
+        for (let article of articleListPrice) {
+            artInfo = article.dataValues;
+
+            let info = { id: artInfo.id, title: artInfo.title, desc: artInfo.description, price: artInfo.price, image: artInfo.image.replace("private", ""), rate: artInfo.rate, date: artInfo.date };
+            allInfos.push(info);
+        }
+
+        return allInfos;
+    },
+
     isArtIDAvailable: async function (artID) {
         const existingArticle = await sequelize.query("SELECT COUNT(*) FROM articles WHERE id = ?", { replacements: [artID], type: QueryTypes.SELECT })
 
         let amountArticle = JSON.stringify(existingArticle[0]).replace(/[^0-9]*/g, '');
 
         return amountArticle > 0 ? true : false;
+    },
+
+    GetArticleFromSearchBar: async function (title) {
+        const articles = await sequelize.query("SELECT * FROM articles WHERE title LIKE ?", { replacements:[title], type: QueryTypes.SELECT });
+    
+        let allInfos = [];
+        for (let article of articles) {
+           let info = { id: article.id, title: article.title, desc: article.description, price: article.price, image: article.image.replace("private", ""), rate: article.rate, date: article.date };
+        
+           allInfos.push(info);   
+        }
+        return allInfos;
     }
 }
 

@@ -62,10 +62,27 @@ app.get('/', async function (req, res, next) {
 
     if (req.session.userID) name = await DBop.GetUsernameByID(req.session.userID); // On modifie name uniquement si le user est connecter
 
-    const articleList = await DBop.GetAllArticleInfo();
+    if(req.query.btn_search === "searching"){ // Using search bar
+        let research = '%' + req.query.looking_for + '%';
+        const researchedInfo = await DBop.GetArticleFromSearchBar(research);
 
-    res.render('index.ejs', { user: name, articleList: articleList });
+        res.render('index.ejs', { user: name, articleList: researchedInfo });
 
+    } else {
+        switch(req.query.tri){ // Sort Mode
+            case "name":
+                res.render('index.ejs', { user: name, articleList: await DBop.GetArticlesByName() });
+                break;
+    
+            case "price":
+                res.render('index.ejs', { user: name, articleList: await DBop.GetArticleByPrice() });
+                break;
+            
+            default:
+                res.render('index.ejs', { user: name, articleList: await DBop.GetAllArticleInfo() });
+                break;
+        }
+    }
 });
 
 app.get('/login', function (req, res, next) {
@@ -244,7 +261,8 @@ app.post('/buy', async function (req, res) {
         console.log(err)
     }
     res.redirect("/buy")
-})
+});
+
 // OTHER
 
 app.use(express.static('private'));

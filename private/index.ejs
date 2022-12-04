@@ -20,78 +20,26 @@
 </head>
 
 <body>
-    <hr>  
+  <hr>  
 
-    <a href="/sell">Sell a syllabus</a>
-    
-    <div class="search">
-      <form action="/" method="get">
-        <input id="input_search" type="text" placeholder="Recherche" name="looking_for" required>
-        <button id="button_search" type="submit" name="btn_search" value="searching">🔎</button>
-      </form>
-    </div>
+  <a href="/sell">Sell a syllabus</a>
+  
+  <div class="search">
+    <form action="/" method="get">
+      <input id="input_search" type="text" placeholder="Recherche" name="looking_for" required>
+      <button id="button_search" type="submit" name="btn_search" value="searching">🔎</button>
+    </form>
+  </div>
 
-    <select class="order" name="order">
-      <option value="" selected="selected" hidden="hidden">Order By</option>
-      <option value="dog">Name</option>
-      <option value="cat">Price</option>
-      <option value="hamster">Date</option>
+  <select class="order" name="order" id="sortMode" onchange="location.href='/?tri='+this.value">
+    <option value="" selected="selected" hidden="hidden">Order By</option>
+    <option value="name">Name</option>
+    <option value="price">Price</option>
+    <option value="date">Date</option>
   </select>
 
   <div class="catalogue">
     <img class="arrow" src="/private/images/FlêcheG.png" alt="">
-    <!-- <div class="items">
-      <p class="Book_name">Titre livre</p>
-      <img src="/private/images/livre1.png" alt="" class="books">
-      <div class="info">
-        <h2 class="prix">20$</h2>
-        <h2 class="description">mathématique pour m'économie</h2>
-        <h2 class="vendeur"> vendu par Charles</h2>
-      </div>
-      <button class="achter">
-        achter
-      </button>
-    </div>
-    <div class="items">
-      <p class="Book_name">Titre livre</p>
-      <img src="/private/images/ex.jpg" alt="" class="books">
-      <div class="info">
-        <h2 class="prix">20$</h2>
-        <h2 class="description">mathématique pour m'économie</h2>
-        <h2 class="vendeur"> vendu par Charles</h2>
-      </div>
-      <button class="achter">
-        achter
-      </button>
-    </div>
-    <div class="items">
-      <p class="Book_name">Titre livre</p>
-      <img src="/private/images/livre1.png" alt="" class="books">
-      <div class="info">
-        <h2 class="prix">20$</h2>
-        <h2 class="description">mathématique pour m'économie</h2>
-        <h2 class="vendeur"> vendu par Charles</h2>
-      </div>
-      <button class="achter">
-        achter
-      </button>
-
-    </div>
-    <div class="items">
-      <p class="Book_name">Titre livre</p>
-      <img src="/private/images/livre2.png" alt="" class="books">
-      <div class="info">
-        <h2 class="prix">20$</h2>
-        <h2 class="description">mathématique pour m'économie</h2>
-        <h2 class="vendeur"> vendu par Charles</h2>
-      </div>
-      <button class="achter">
-        achter
-      </button>
-    </div>
-    <img class="arrow" src="/private/images/FlêcheD.png" alt="">
-  </div> -->
-
 
     <% articleList.forEach(function(article){ %>
       <div class="items">
@@ -107,6 +55,5 @@
         </button>
       </div>
     <% }) %>
-
 
 </body>
