@@ -1,5 +1,7 @@
 // Imports of packages
 const { Sequelize, DataTypes, Model, QueryTypes } = require('sequelize');
+const crypto = require('crypto')
+
 // Creation of link with db
 const sequelize = new Sequelize({
     dialect: 'sqlite',
@@ -73,9 +75,12 @@ Article.init({
         type: DataTypes.INTEGER,
         allowNull: false
     },
-    date: {
-        type: DataTypes.TEXT,
+    selled: {
+        type: DataTypes.BOOLEAN,
         allowNull: false
+    },
+    buyer: {
+        type: DataTypes.INTEGER
     }
 }, { sequelize, modelName: 'articles' });
 
@@ -99,11 +104,39 @@ ArticleUser.init({
     },
 }, { sequelize, modelName: 'articleUsers' });
 
+class Preferences extends Model { }
+Preferences.init({
+    userId: {
+        type: DataTypes.INTEGER,
+        primaryKey: true,
+        references: {
+            model: User,
+            key: 'id'
+        }
+    },
+    nightMode: {
+        type: DataTypes.BOOLEAN,
+        allowNull: false
+    },
+    privateEmail: {
+        type: DataTypes.BOOLEAN,
+        allowNull: false
+    },
+    horizontalView: {
+        type: DataTypes.BOOLEAN,
+        allowNull: false
+    }
+}, { sequelize, modelName: 'preferences' });
+
+async function sha256(message) { // Fonction de hash
+    return crypto.createHash('sha256').update(message).digest('hex');
+}
+
 const DBOperations = {
     AddUser: async function (username, email, password) {
         let newUser = await User.create({
             username: username,
-            password: password,
+            password: await sha256(password),
             money: 0
         });
 
@@ -112,18 +145,25 @@ const DBOperations = {
             userId: newUser.id
         });
 
+        Preferences.create({
+            userId: newUser.id,
+            nightMode: false,
+            privateEmail: true,
+            horizontalView: true
+        })
+
         sequelize.sync();
         return newUser.id;
     },
 
     LoginUser: async function (email, password) {
         let userIDFromEmail = await sequelize.query("SELECT userId FROM emails WHERE email = ?", { replacements: [email], type: QueryTypes.SELECT });
-
+        
         if (typeof userIDFromEmail !== 'undefined' && typeof userIDFromEmail[0] !== 'undefined' && typeof userIDFromEmail[0]['userId'] !== 'undefined') {
             let passwordOfID = await sequelize.query("SELECT password FROM users WHERE id = ?", { replacements: [userIDFromEmail[0]['userId']], type: QueryTypes.SELECT });
-
+            
             if (typeof passwordOfID !== 'undefined' && typeof passwordOfID[0] !== 'undefined' && typeof passwordOfID[0]['password'] !== 'undefined') {
-                if (passwordOfID[0]['password'] === password) {
+                if (passwordOfID[0]['password'] === await sha256(password)) {
                     return userIDFromEmail[0]['userId'];
                 }
             }
@@ -167,6 +207,24 @@ const DBOperations = {
         if (typeof moneyFromId !== 'undefined' && typeof moneyFromId[0] !== 'undefined' && typeof moneyFromId[0]['money'] !== 'undefined') {
             return moneyFromId[0]["money"];
         }
+    }, // nightmode, view, private
+
+    GetNightModeByID: async function (id) {
+        const hasNightMode = await sequelize.query("SELECT nightMode FROM preferences WHERE userId = ?", { replacements: [id], type: QueryTypes.SELECT });
+        
+        return hasNightMode[0]["nightMode"] === 1 ? true : false;
+    },
+
+    GetPrivateEmailByID: async function (id) {
+        const hasNightMode = await sequelize.query("SELECT privateEmail FROM preferences WHERE userId = ?", { replacements: [id], type: QueryTypes.SELECT });
+        
+        return hasNightMode[0]["privateEmail"] === 1 ? true : false;
+    },
+
+    GetHorizontalViewByID: async function (id) {
+        const hasNightMode = await sequelize.query("SELECT horizontalView FROM preferences WHERE userId = ?", { replacements: [id], type: QueryTypes.SELECT });
+        
+        return hasNightMode[0]["horizontalView"] === 1 ? true : false;
     },
 
     //SETTERS
@@ -193,21 +251,42 @@ const DBOperations = {
 
     SetNewPassword: async function (userID, newPassword) {
         await User.update(
-            { password: newPassword },
+            { password: sha256(newPassword) },
             { where: { id: userID } }
+        );
+    },
+
+    SetNewNightMode: async function (userID, newNightMode) {
+        await Preferences.update(
+            { nightMode: newNightMode },
+            { where: { userId: userID } }
+        );
+    },
+
+    SetNewPrivateEmail: async function (userID, newPrivateEmail) {
+        await Preferences.update(
+            { privateEmail: newPrivateEmail },
+            { where: { userId: userID } }
+        );
+    },
+
+    SetNewHorizontalView: async function (userID, newHorizontalView) {
+        await Preferences.update(
+            { horizontalView: newHorizontalView },
+            { where: { userId: userID } }
         );
     },
 
     //Article related
 
-    AddArticle: async function (userID, title, desc, price, image, stars, date) {
+    AddArticle: async function (userID, title, desc, price, image, stars) {
         let newArticle = await Article.create({
             title: title,
             description: desc,
             price: price,
             image: image,
             rate: stars,
-            date: date
+            selled: false
         });
 
         ArticleUser.create({
@@ -231,11 +310,11 @@ const DBOperations = {
         let allInfos = [];
         for (let article of articlesList) {
             artInfo = article.dataValues;
+            let seller = await this.GetSellerByArtID(article.id);
 
-            let info = { id: artInfo.id, title: artInfo.title, desc: artInfo.description, price: artInfo.price, image: artInfo.image.replace("private", ""), rate: artInfo.rate, date: artInfo.date };
+            let info = { id: artInfo.id, title: artInfo.title, desc: artInfo.description, price: artInfo.price, image: artInfo.image.replace("private", ""), rate: artInfo.rate, selled: artInfo.selled, seller: seller };
             allInfos.push(info);
         }
-
         return allInfos.reverse();
     },
 
@@ -245,8 +324,9 @@ const DBOperations = {
         let allInfos = [];
         for (let article of articleListTitle) {
             artInfo = article.dataValues;
+            let seller = await this.GetSellerByArtID(article.id);
 
-            let info = { id: artInfo.id, title: artInfo.title, desc: artInfo.description, price: artInfo.price, image: artInfo.image.replace("private", ""), rate: artInfo.rate, date: artInfo.date };
+            let info = { id: artInfo.id, title: artInfo.title, desc: artInfo.description, price: artInfo.price, image: artInfo.image.replace("private", ""), rate: artInfo.rate, selled: artInfo.selled, seller: seller };
             allInfos.push(info);
         }
 
@@ -259,8 +339,9 @@ const DBOperations = {
         let allInfos = [];
         for (let article of articleListPrice) {
             artInfo = article.dataValues;
+            let seller = await this.GetSellerByArtID(article.id);
 
-            let info = { id: artInfo.id, title: artInfo.title, desc: artInfo.description, price: artInfo.price, image: artInfo.image.replace("private", ""), rate: artInfo.rate, date: artInfo.date };
+            let info = { id: artInfo.id, title: artInfo.title, desc: artInfo.description, price: artInfo.price, image: artInfo.image.replace("private", ""), rate: artInfo.rate, selled: artInfo.selled, seller: seller };
             allInfos.push(info);
         }
 
@@ -277,14 +358,28 @@ const DBOperations = {
 
     GetArticleFromSearchBar: async function (title) {
         const articles = await sequelize.query("SELECT * FROM articles WHERE title LIKE ?", { replacements:[title], type: QueryTypes.SELECT });
-    
+
         let allInfos = [];
         for (let article of articles) {
-           let info = { id: article.id, title: article.title, desc: article.description, price: article.price, image: article.image.replace("private", ""), rate: article.rate, date: article.date };
+            let seller = await this.GetSellerByArtID(article.id);
+            let info = { id: article.id, title: article.title, desc: article.description, price: article.price, image: article.image.replace("private", ""), rate: article.rate, selled: article.selled, seller: seller };
         
-           allInfos.push(info);   
+            allInfos.push(info);   
         }
         return allInfos;
+    },
+
+    GetSellerByArtID: async function(artID) {
+        const sellerID = await sequelize.query("SELECT userId FROM articleUsers WHERE ArtId = ?", { replacements: [artID], type: QueryTypes.SELECT });
+        let isPrivate = await sequelize.query("SELECT privateEmail FROM preferences WHERE userId = ?", { replacements: [sellerID[0]["userId"]], type: QueryTypes.SELECT });
+        
+        if(isPrivate[0]["privateEmail"] === 1) {
+            let sellerUsername = await sequelize.query("SELECT username FROM users WHERE id = ?", { replacements: [sellerID[0]["userId"]], type: QueryTypes.SELECT });
+            return sellerUsername[0]["username"]
+        }
+
+        let sellerEmail = await sequelize.query("SELECT email FROM emails WHERE userId = ?", { replacements: [sellerID[0]["userId"]], type: QueryTypes.SELECT });
+        return sellerEmail[0]["email"]
     }
 }
 

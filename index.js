@@ -89,7 +89,7 @@ app.get('/login', function (req, res, next) {
     if (req.session.userID) { //login page available only when logout
         res.redirect('/profil');
     } else {
-        res.render('login.ejs');
+        res.render('login.ejs', { error : "" });
     }
 });
 
@@ -100,8 +100,11 @@ app.get('/profil', async function (req, res, next) {
         let name = await DBop.GetUsernameByID(req.session.userID);
         let money = await DBop.GetMoneyByID(req.session.userID);
         let email = await DBop.GetEmailByID(req.session.userID);
+        let nightMode = await DBop.GetNightModeByID(req.session.userID);
+        let privateEmail = await DBop.GetPrivateEmailByID(req.session.userID);
+        let horizontalView = await DBop.GetHorizontalViewByID(req.session.userID);
 
-        res.render('profil.ejs', { user: name, money: money, email: email });
+        res.render('profil.ejs', { user: name, money: money, email: email, nightMode: nightMode, privateEmail: privateEmail, horizontalView: horizontalView });
     }
 });
 
@@ -149,7 +152,8 @@ app.post("/login", async function (req, res) {
 
         let userID = await DBop.LoginUser(req.body.email, req.body.password);
         if (userID === -1) {
-            console.log("error"); // inform user of this error !
+            res.render('login.ejs', { error: "Email and password don't match !" });
+            return;
         } else {
             req.session.userID = userID;
         }
@@ -160,23 +164,25 @@ app.post("/login", async function (req, res) {
         }
 
         if (req.body.password !== req.body.password_confirm) {
-            return; //inform user both password should be equal !
+            res.render('login.ejs', { error: "Both passwords should be equal !" });
+            return;
         }
 
         DBop.CheckUniqueIDs(req.body.username, req.body.email).then(async unique => {
             if (unique) {
                 await DBop.AddUser(req.body.username, req.body.email, req.body.password).then(userID => {
                     req.session.userID = userID; // User added to db, and connected
+                    return;
                 });
             } else {
-                console.log("email already used"); // inform user of this error !
+                res.render('login.ejs', { error: "Email already used !" });
+                return;
             }
         });
     }
     // Redirection si necessaire
     let from = req.session.from
     if (from === undefined) from = "";
-    console.log(from)
     res.redirect("/" + from);
 });
 
@@ -216,6 +222,42 @@ app.post("/profil", async function (req, res) {
 
             res.redirect("/profil");
             break;
+
+        case 'nightMode':
+            if (req.body.night_mode !== null) {
+                if(req.body.night_mode) {
+                    DBop.SetNewNightMode(req.session.userID, 1);
+                } else {
+                    DBop.SetNewNightMode(req.session.userID, 0);
+                }
+            }
+
+            res.redirect("/profil");
+            break;
+
+        case 'privateEmail':
+            if (req.body.privateEmail !== null) {
+                if(req.body.privateEmail) {
+                    DBop.SetNewPrivateEmail(req.session.userID, 1);
+                } else {
+                    DBop.SetNewPrivateEmail(req.session.userID, 0);
+                }
+            }
+
+            res.redirect("/profil");
+            break;
+
+        case 'horizontalView':
+            if (req.body.horizontalView !== null) {
+                if(req.body.horizontalView) {
+                    DBop.SetNewHorizontalView(req.session.userID, 1);
+                } else {
+                    DBop.SetNewHorizontalView(req.session.userID, 0);
+                }
+            }
+
+            res.redirect("/profil");
+            break;
     }
 
 });
@@ -226,9 +268,7 @@ app.post('/sell', upload.single('image'), async function (req, res) {
         req.session.from = "sell"
         res.redirect('/login');
     } else {
-        let date = new Date();
-
-        await DBop.AddArticle(req.session.userID, req.body.title, req.body.description, req.body.price, req.file.path, req.body.stars, `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`);
+        await DBop.AddArticle(req.session.userID, req.body.title, req.body.description, req.body.price, req.file.path, req.body.stars);
         res.redirect('/');
     }
 });

@@ -56,6 +56,47 @@
                 <button class="btn-success" type="submit" name="logout" value="logout">Logout</button>
             </form>
         </div>
+
+        <div>
+            <h2 class="text"><strong>Settings</strong></h2>
+        
+            <form action="/profil" method="post">
+                <label for="night_mode">Night mode: </label>
+
+                <% if(nightMode) { %> 
+                    <input type="checkbox" id="night_mode" name="night_mode" checked>
+                <% } else { %> 
+                    <input type="checkbox" id="night_mode" name="night_mode">
+                <% } %>
+                
+                <button class="btn-success" type="submit" name="modify" value="nightMode">Modify</button>
+            </form>
+
+            <form action="/profil" method="post">
+                <label for="privateEmail">Only show pseudo (otherwise email): </label>
+
+                <% if(privateEmail) { %> 
+                    <input type="checkbox" id="privateEmail" name="privateEmail" checked>
+                <% } else { %> 
+                    <input type="checkbox" id="privateEmail" name="privateEmail">
+                <% } %>
+
+                <button class="btn-success" type="submit" name="modify" value="privateEmail">Modify</button>
+            </form>
+
+            <form action="/profil" method="post">
+                <label for="horizontalView">Horizontal view </label>
+
+                <% if(horizontalView) { %> 
+                    <input type="checkbox" id="viehorizontalVieww" name="horizontalView" checked>
+                <% } else { %> 
+                    <input type="checkbox" id="horizontalView" name="horizontalView">
+                <% } %>
+
+                <button class="btn-success" type="submit" name="modify" value="horizontalView">Modify</button>
+            </form>
+
+        </div>
   
     </main>
     

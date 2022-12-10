@@ -48,7 +48,7 @@
         <div class="info">
           <h2 class="prix"> <%= article.price %> €</h2>
           <h2 class="description"> <%= article.desc %> </h2>
-          <h2 class="vendeur"> vendu par Charles</h2>
+          <h2 class="vendeur"> vendu par <%= article.seller %></h2>
         </div>
         <button class="achter" onclick="location.href='/buy?artID=<%= article.id %>';" >
           Acheter
