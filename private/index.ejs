@@ -2,28 +2,28 @@
 <html lang="FR">
 
 <head>
-    <meta charset="utf-8">
-    <title>SyllaExchange</title>
-    <link rel="stylesheet" href="style.css">
-    <link rel="shortcut icon" href="images/logo.icon">
-  
-    <header>
-      <a href="/">
-        <img class="logo" src="images/logo.png" alt="SyllaExchange-Logo">
-      </a>
-  
-      <h1 class="title"><a href="/" id="title_link">SyllaExchange</a></h1>
-  
-      <input type="button" value=<%=user %> id="connexion" onclick="location.href='/login';">
+  <meta charset="utf-8">
+  <title>SyllaExchange</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="shortcut icon" href="images/logo.icon">
 
-    </header>
+  <header>
+    <a href="/">
+      <img class="logo" src="images/logo.png" alt="SyllaExchange-Logo">
+    </a>
+
+    <h1 class="title"><a href="/" id="title_link">SyllaExchange</a></h1>
+
+    <input type="button" value=<%=user %> id="connexion" onclick="location.href='/login';">
+
+  </header>
 </head>
 
 <body>
-  <hr>  
+  <hr>
 
   <a href="/sell">Sell a syllabus</a>
-  
+
   <div class="search">
     <form action="/" method="get">
       <input id="input_search" type="text" placeholder="Recherche" name="looking_for" required>
@@ -43,17 +43,26 @@
 
     <% articleList.forEach(function(article){ %>
       <div class="items">
-        <p class="Book_name"> <%= article.title %> </p>
-        <img src= <%= article.image %> alt="Syllabus-image" class="books">
+        <p class="Book_name">
+          <%= article.title %>
+        </p>
+        <img src=<%=article.image %> alt="Syllabus-image" class="books">
         <div class="info">
-          <h2 class="prix"> <%= article.price %> €</h2>
-          <h2 class="description"> <%= article.desc %> </h2>
-          <h2 class="vendeur"> vendu par <%= article.seller %></h2>
+          <h2 class="prix">
+            <%= article.price %> €
+          </h2>
+          <h2 class="description">
+            <%= article.desc %>
+          </h2>
+          <h2 class="vendeur"> vendu par <%= article.seller %>
+          </h2>
         </div>
-        <button class="achter" onclick="location.href='/buy?artID=<%= article.id %>';" >
+        <button class="achter" onclick="location.href='/buy?artID=<%= article.id %>';">
           Acheter
         </button>
       </div>
-    <% }) %>
+      <% }) %>
 
 </body>
+
+</html>

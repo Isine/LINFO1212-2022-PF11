@@ -27,6 +27,7 @@ Lorsque l'installation est terminer, il vous suffit d'executer la commande: "nod
 - Fichier "database.js" permet d'intéragir avec la base de donnée
 - Fichier "index.js" permet de lancer le site comme expliquer plus haut
 - Fichier "README.md" est le fichier actuel qui vous explique ce que vous devez savoir
+- Fichier "package.json" pour faciliter l'installation des dépendances
 
 
 ### auteurs :

@@ -1,224 +1,226 @@
 body {
-    font-family: 'Titillium Web', sans-serif;
-    background: url(/images/background.png);
-    background-repeat: no-repeat;
-    background-size: cover;
+  font-family: 'Titillium Web', sans-serif;
+  background: url(/images/background.png) no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
 }
 
 /* HEADER */
-
 header {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
-    grid-template-rows: 1fr;
-    backdrop-filter: blur(30px);
-    background-color: rgba(182, 182, 182, 0.2);
-    margin: unset;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+  grid-template-rows: 1fr;
+  backdrop-filter: blur(30px);
+  background-color: rgba(182, 182, 182, 0.2);
+  margin: unset;
 }
 
 .logo {
-    min-width: 50px;
-    width: 30%;
+  min-width: 50px;
+  width: 30%;
 }
 
 .title {
-    grid-column-start: 3;
-    grid-column-end: 3;
-    grid-row-start: 1;
-    grid-row-end: 1; 
+  grid-column-start: 3;
+  grid-column-end: 3;
+  grid-row-start: 1;
+  grid-row-end: 1;
 }
 
 #title_link {
-    text-decoration: none;
-    color:black;
+  text-decoration: none;
+  color: black;
 }
 
 #connexion {
-    grid-column-start: 5;
-    grid-column-end: 5;
-    grid-row-start: 1;
-    grid-row-end: 1;
-    height: 50%;
-    min-height: 5px;
-    min-width: 5px;
-    width: 100%;
-
-    margin-top: 20px;
+  grid-column-start: 5;
+  grid-column-end: 5;
+  grid-row-start: 1;
+  grid-row-end: 1;
+  height: 50%;
+  min-height: 5px;
+  min-width: 5px;
+  width: 100%;
+  margin-top: 20px;
 }
 
 .search {
-    position: absolute;
-    top: 150px;
-    right: 5px;
-    background-color: rgb(255, 255, 255,0.1s);
-    width: 300px;
-    height: 50px;
-    display: flex;
-    align-items: center;
-    border-radius: 30px;
-    justify-content: center;
-    
+  position: absolute;
+  top: 150px;
+  right: 5px;
+  background-color: rgb(255, 255, 255, 0.1s);
+  width: 300px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  border-radius: 30px;
+  justify-content: center;
 }
 
 #input_search {
-    width: 60%;
-    height: 18px;
-    border-radius: 50px;
-    
+  width: 60%;
+  height: 18px;
+  border-radius: 50px;
 }
 
 #button_search {
-    border: none;
-    border-radius: 30%;
-    cursor: pointer;
-    background-color: rgb(74, 68, 68);
-    text-shadow: 1px 1px 1px #000;
-    height: 25px;
-    width: 30%;
-    
+  border: none;
+  border-radius: 30%;
+  cursor: pointer;
+  background-color: rgb(74, 68, 68);
+  text-shadow: 1px 1px 1px #000;
+  height: 25px;
+  width: 30%;
 }
 
 #button_search:hover {
-    background-color: rgb(53, 49, 49);
+  background-color: rgb(53, 49, 49);
 }
 
 /* REGISTER AND LOGIN */
-
 .cover {
-    width: 400px;
-    margin: 0 auto;
+  width: 400px;
+  margin: 0 auto;
 }
+
 .mastfoot {
-    padding-top: 0px;
-    text-align: center;
-    margin: auto;
+  padding-top: 0px;
+  text-align: center;
+  margin: auto;
 }
 
-/* PROFIL */
 
-
-/* SELL STAR */ 
+/* SELL STAR */
 .checked {
   color: orange;
 }
 
-
 /* use reverse flexbox to take advantage of flex-direction: reverse */
 .star-rating {
-    display: flex;
-    align-items: center;
-    width: 160px;
-    flex-direction: row-reverse;
-    justify-content: space-between;
-    margin: 40px auto;
-    position: relative;
-  }
-  /* hide the inputs */
-  .star-rating input {
-    display: none;
-  }
-  /* set properties of all labels */
-  .star-rating > label {
-    width: 30px;
-    height: 30px;
-    font-family: Arial;
-    font-size: 30px;
-    transition: 0.2s ease;
-    color: orange;
-  }
-  /* give label a hover state */
-  .star-rating label:hover {
-    color: #ff69b4;
-    transition: 0.2s ease;
-  }
-  .star-rating label:active::before {
-    transform:scale(1.1);
-  }
-  
-  /* set shape of unselected label */
-  .star-rating label::before {
-    content: '\2606';
-    position: absolute;
-    top: 0px;
-    line-height: 26px;
-  }
-  /* set full star shape for checked label and those that come after it */
-  .star-rating input:checked ~ label:before {
-    content:'\2605';
-  }
-  
-  @-moz-document url-prefix() {
-    .star-rating input:checked ~ label:before {
+  display: flex;
+  align-items: center;
+  width: 160px;
+  flex-direction: row-reverse;
+  justify-content: space-between;
+  margin: 40px auto;
+  position: relative;
+}
+
+/* hide the inputs */
+.star-rating input {
+  display: none;
+}
+
+/* set properties of all labels */
+.star-rating>label {
+  width: 30px;
+  height: 30px;
+  font-family: Arial;
+  font-size: 30px;
+  transition: 0.2s ease;
+  color: orange;
+}
+
+/* give label a hover state */
+.star-rating label:hover {
+  color: #ff69b4;
+  transition: 0.2s ease;
+}
+
+.star-rating label:active::before {
+  transform: scale(1.1);
+}
+
+/* set shape of unselected label */
+.star-rating label::before {
+  content: '\2606';
+  position: absolute;
+  top: 0px;
+  line-height: 26px;
+}
+
+/* set full star shape for checked label and those that come after it */
+.star-rating input:checked~label:before {
+  content: '\2605';
+}
+
+@-moz-document url-prefix() {
+  .star-rating input:checked~label:before {
     font-size: 36px;
     line-height: 21px;
-    }
-  } 
-  
-  
-  /* INDEX*/
-  .order{
-    position: absolute;
-    right: 50px;
-    top: 200px;
   }
-  .catalogue{
-    position: relative;
-    left: 17%;
-    height: 400px;
-    width: 1200px;
-    margin: 100px;
-    backdrop-filter: blur(30px);
-    align-items: center;
-    display: flex;
-    justify-content: center;
-    justify-content: space-between;
-    
-    
-  }
-  .items{
-    width: 200px;
-    height: 400px;
-    background-color: #e4fdc4;
-    border: 2px solid black;
-    border-radius: 30px;
-    display: flex; 
-    align-items: center;
-    flex-direction: column;
-    box-shadow: 2px 10px 12px rgb(53, 49, 49);
-  }
-  .books{
-    width: 100px;
-    height: 160px;
-    border: 2px solid black;
-    padding: 2px;
-    background-color: white;
-  }
-  .info{
-    font-size: 10px;
-    position: relative;
-    left: 40px;
-
-  }
-  .achter{
-    position: relative;
-    top: 15px;
-    border-radius: 30px;
-    width: 100px;
-    cursor: pointer;
-  }
-  .arrow{
-    cursor: pointer;
-  }
-/* BUY*/
-
-.name{
-  position: relative;
-  left: 25%;
-  text-decoration: underline ;
 }
 
 
-.selling{
+/* INDEX*/
+.order {
+  position: absolute;
+  right: 50px;
+  top: 200px;
+}
+
+.catalogue {
+  position: relative;
+  left: 17%;
+  height: 400px;
+  width: 1200px;
+  margin: 100px;
+  backdrop-filter: blur(30px);
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  justify-content: space-between;
+}
+
+.items {
+  width: 200px;
+  height: 400px;
+  background-color: #e4fdc4;
+  border: 2px solid black;
+  border-radius: 30px;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  box-shadow: 2px 10px 12px rgb(53, 49, 49);
+}
+
+.books {
+  width: 100px;
+  height: 160px;
+  border: 2px solid black;
+  padding: 2px;
+  background-color: white;
+}
+
+.info {
+  font-size: 10px;
+  position: relative;
+  left: 40px;
+}
+
+.achter {
+  position: relative;
+  top: 15px;
+  border-radius: 30px;
+  width: 100px;
+  cursor: pointer;
+}
+
+.arrow {
+  cursor: pointer;
+}
+
+
+/* BUY*/
+.name {
+  position: relative;
+  left: 25%;
+  text-decoration: underline;
+}
+
+.selling {
   border-radius: 1em;
   position: relative;
   left: 25%;
@@ -226,38 +228,40 @@ header {
   width: 60em;
   height: 47em;
   justify-content: space-between;
-  background-image: linear-gradient(#fbc2eb , #a6c1ee)
+  background-image: linear-gradient(#fbc2eb, #a6c1ee)
 }
-.txt{
+
+.txt {
   margin: 1em;
   display: flex;
   flex-direction: column;
   align-items: center;
   width: 30em;
   border: #000 0.1em solid;
-  
 }
-.resume{
-  color: rgb(121,37,18);
+
+.resume {
+  color: rgb(121, 37, 18);
   height: 10em;
   display: flex;
   align-items: center;
   justify-content: center;
 }
-.btnachter{
+
+.btnachter {
   cursor: pointer;
   border-radius: 30px;
   border-top: none;
 }
-.imagedulivre{
+
+.imagedulivre {
   margin: 1em;
   border: #000 0.1em solid;
-  
 }
 
 
 /* SELL*/
-.SellProduct{
+.SellProduct {
   background-color: white;
   position: relative;
   left: 38%;
@@ -265,36 +269,30 @@ header {
   flex-direction: column;
   width: 500px;
   border: 2px black solid;
-  
 }
-/* Profile*/
-.login_signup_form{
+
+
+/* PROFIL*/
+.login_signup_form {
   position: relative;
   left: 38%;
   width: 500px;
   height: 400px;
-  background-image: linear-gradient(rgb(3, 3, 156),rgb(57, 68, 214));
+  background-image: linear-gradient(rgb(3, 3, 156), rgb(57, 68, 214));
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: space-around;
   border-radius: 30px;
-  
 }
-.text{
+
+.text {
   text-decoration: underline;
 }
 
-.btn-success{
+.btn-success {
   border: red 1px solid;
   border-radius: 30px;
-  background-image: linear-gradient(yellow,orange);
+  background-image: linear-gradient(yellow, orange);
   cursor: pointer;
-  
-
 }
-  
-
-
-  
-  
