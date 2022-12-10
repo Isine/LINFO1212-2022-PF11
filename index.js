@@ -59,25 +59,24 @@ const upload = multer({
 
 app.get('/', async function (req, res, next) {
     let name = "Connexion"
-
     if (req.session.userID) name = await DBop.GetUsernameByID(req.session.userID); // On modifie name uniquement si le user est connecter
 
-    if(req.query.btn_search === "searching"){ // Using search bar
+    if (req.query.btn_search === "searching") { // Using search bar
         let research = '%' + req.query.looking_for + '%';
         const researchedInfo = await DBop.GetArticleFromSearchBar(research);
 
         res.render('index.ejs', { user: name, articleList: researchedInfo });
 
     } else {
-        switch(req.query.tri){ // Sort Mode
+        switch (req.query.tri) { // Sort Mode
             case "name":
                 res.render('index.ejs', { user: name, articleList: await DBop.GetArticlesByName() });
                 break;
-    
+
             case "price":
                 res.render('index.ejs', { user: name, articleList: await DBop.GetArticleByPrice() });
                 break;
-            
+
             default:
                 res.render('index.ejs', { user: name, articleList: await DBop.GetAllArticleInfo() });
                 break;
@@ -89,7 +88,7 @@ app.get('/login', function (req, res, next) {
     if (req.session.userID) { //login page available only when logout
         res.redirect('/profil');
     } else {
-        res.render('login.ejs', { error : "" });
+        res.render('login.ejs', { error: "" });
     }
 });
 
@@ -109,9 +108,14 @@ app.get('/profil', async function (req, res, next) {
 });
 
 app.get('/sell', async function (req, res, next) {
-    let name = "Connexion"
+    if (!req.session.userID) {
+        console.log("hey")
+        req.session.from = "sell"
+        res.redirect('/login');
+        return
+    }
 
-    if (req.session.userID) name = await DBop.GetUsernameByID(req.session.userID);
+    const name = await DBop.GetUsernameByID(req.session.userID);
 
     res.render('sell.ejs', { user: name });
 });
@@ -154,9 +158,9 @@ app.post("/login", async function (req, res) {
         if (userID === -1) {
             res.render('login.ejs', { error: "Email and password don't match !" });
             return;
-        } else {
-            req.session.userID = userID;
         }
+        req.session.userID = userID;
+
 
     } else { // Register request
         if (req.body.username === null || req.body.email === null || req.body.password === null || req.body.password_confirm === null) {
@@ -168,16 +172,16 @@ app.post("/login", async function (req, res) {
             return;
         }
 
-        DBop.CheckUniqueIDs(req.body.username, req.body.email).then(async unique => {
-            if (unique) {
-                await DBop.AddUser(req.body.username, req.body.email, req.body.password).then(userID => {
-                    req.session.userID = userID; // User added to db, and connected
-                    return;
-                });
-            } else {
-                res.render('login.ejs', { error: "Email already used !" });
-                return;
-            }
+        let unique = await DBop.CheckUniqueIDs(req.body.username, req.body.email)
+        if (!unique) {
+            res.render('login.ejs', { error: "Email already used !" });
+            return;
+        }
+
+        // Il nous faut une variable ici afin que la req.session.userID soit bien enregistee
+        const output = await DBop.AddUser(req.body.username, req.body.email, req.body.password).then(userID => {
+            req.session.userID = userID; // User added to db, and connected
+            return
         });
     }
     // Redirection si necessaire
@@ -225,7 +229,7 @@ app.post("/profil", async function (req, res) {
 
         case 'nightMode':
             if (req.body.night_mode !== null) {
-                if(req.body.night_mode) {
+                if (req.body.night_mode) {
                     DBop.SetNewNightMode(req.session.userID, 1);
                 } else {
                     DBop.SetNewNightMode(req.session.userID, 0);
@@ -237,7 +241,7 @@ app.post("/profil", async function (req, res) {
 
         case 'privateEmail':
             if (req.body.privateEmail !== null) {
-                if(req.body.privateEmail) {
+                if (req.body.privateEmail) {
                     DBop.SetNewPrivateEmail(req.session.userID, 1);
                 } else {
                     DBop.SetNewPrivateEmail(req.session.userID, 0);
@@ -249,7 +253,7 @@ app.post("/profil", async function (req, res) {
 
         case 'horizontalView':
             if (req.body.horizontalView !== null) {
-                if(req.body.horizontalView) {
+                if (req.body.horizontalView) {
                     DBop.SetNewHorizontalView(req.session.userID, 1);
                 } else {
                     DBop.SetNewHorizontalView(req.session.userID, 0);
