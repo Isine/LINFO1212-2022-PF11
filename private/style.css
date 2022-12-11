@@ -154,25 +154,40 @@ header {
 }
 
 
-/* INDEX vertical
+/* AFFICHAGE DES ARTICLES */
+/* PARTIE COMMUNE */
 .order {
   position: absolute;
   right: 5%;
   top: 27%;
 }
 
-.catalogue {
+.Book_name{
+  position: relative;
+  left: 20%;
+}
+
+.info {
+  font-size: 10px;
+}
+
+.arrow {
+  cursor: pointer;
+}
+
+/* AFFICHAGE VERTICAL */
+.catalogueV {
   left: 25%;
   position: relative;
   height: 80vh;
   width: 50vw;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between; 
   align-items: center;
+  display: flex;
+  justify-content: space-between; 
+  flex-direction: column;
 }
 
-.items {
+.itemsV {
   width: 30vw;
   height: 15vh;
   background-color: #e4fdc4;
@@ -184,11 +199,8 @@ header {
   justify-content: space-between; 
   
 }
-.Book_name{
-  position: relative;
-  left: 20%;
-}
-.books {
+
+.booksV {
   position: relative;
   right: 20%;
   border-radius: 3px;
@@ -199,10 +211,8 @@ header {
   padding: 2px;
   background-color: white;
 }
-.info {
-  font-size: 10px;
-}
-.achter {
+
+.acheterV {
   border-radius: 30px;
   width: 25%;
   height: 102%;
@@ -211,19 +221,8 @@ header {
   border-left: none;
 }
 
-.arrow {
-  cursor: pointer;
-}
-*/
-
-/*Version Horizontal*/
-.order {
-  position: absolute;
-  right: 5%;
-  top: 27%;
-}
-
-.catalogue {
+/* AFFICHAGE HORIZONTAL */
+.catalogueH {
   top: 10vh;
   left: 10%;
   position: relative;
@@ -235,7 +234,7 @@ header {
   justify-content: space-around; 
 }
 
-.items {
+.itemsH {
   width: 15vw;
   height: 45vh;
   background-color: #e4fdc4;
@@ -245,11 +244,9 @@ header {
   align-items: center;
   flex-direction: column;
   text-align: center;
-
-
 }
 
-.books {
+.booksH {
   width: 100px;
   height: 160px;
   border: 2px solid black;
@@ -257,11 +254,7 @@ header {
   background-color: white;
 }
 
-.info {
-  font-size: 10px;
-}
-
-.achter {
+.acheterH {
   position: relative;
   top: 15px;
   border-radius: 30px;
@@ -269,12 +262,7 @@ header {
   cursor: pointer;
 }
 
-.arrow {
-  cursor: pointer;
-}
-
-
-/* BUY*/
+/* BUY */
 .name {
   position: relative;
   left: 25%;

@@ -59,26 +59,30 @@ const upload = multer({
 
 app.get('/', async function (req, res, next) {
     let name = "Connexion"
-    if (req.session.userID) name = await DBop.GetUsernameByID(req.session.userID); // On modifie name uniquement si le user est connecter
+    let viewPref = true;
+    if (req.session.userID){
+        name = await DBop.GetUsernameByID(req.session.userID); // On modifie name uniquement si le user est connecter
+        viewPref = await DBop.GetHorizontalViewByID(req.session.userID);  
+    } 
 
     if (req.query.btn_search === "searching") { // Using search bar
         let research = '%' + req.query.looking_for + '%';
         const researchedInfo = await DBop.GetArticleFromSearchBar(research);
 
-        res.render('index.ejs', { user: name, articleList: researchedInfo });
+        res.render('index.ejs', { user: name, articleList: researchedInfo, viewPref: viewPref });
 
     } else {
         switch (req.query.tri) { // Sort Mode
             case "name":
-                res.render('index.ejs', { user: name, articleList: await DBop.GetArticlesByName() });
+                res.render('index.ejs', { user: name, articleList: await DBop.GetArticlesByName(),viewPref: viewPref });
                 break;
 
             case "price":
-                res.render('index.ejs', { user: name, articleList: await DBop.GetArticleByPrice() });
+                res.render('index.ejs', { user: name, articleList: await DBop.GetArticleByPrice(), viewPref: viewPref });
                 break;
 
             default:
-                res.render('index.ejs', { user: name, articleList: await DBop.GetAllArticleInfo() });
+                res.render('index.ejs', { user: name, articleList: await DBop.GetAllArticleInfo(), viewPref: viewPref });
                 break;
         }
     }

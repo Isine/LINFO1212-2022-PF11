@@ -370,10 +370,12 @@ const DBOperations = {
 
         let allInfos = [];
         for (let article of articles) {
-            let seller = await this.GetSellerByArtID(article.id);
-            let info = { id: article.id, title: article.title, desc: article.description, price: article.price, image: article.image.replace("private", ""), rate: article.rate, selled: article.selled, seller: seller };
-        
-            allInfos.push(info);   
+            if(!article.selled) { // Affiche que si article en vente
+                let seller = await this.GetSellerByArtID(article.id);
+                let info = { id: article.id, title: article.title, desc: article.description, price: article.price, image: article.image.replace("private", ""), rate: article.rate, selled: article.selled, seller: seller };
+            
+                allInfos.push(info);  
+            }
         }
         return allInfos;
     },
