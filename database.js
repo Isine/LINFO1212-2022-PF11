@@ -298,10 +298,10 @@ const DBOperations = {
     },
 
     GetArticleInfoByID: async function (artID) {
-        const article = await sequelize.query("SELECT title, description, price, image, rate, date FROM articles WHERE id = ?", { replacements: [artID], type: QueryTypes.SELECT });
+        const article = await sequelize.query("SELECT title, description, price, image, rate, selled FROM articles WHERE id = ?", { replacements: [artID], type: QueryTypes.SELECT });
         const sellerID = await sequelize.query("SELECT userId FROM articleUsers WHERE ArtId = ?", { replacements: [artID], type: QueryTypes.SELECT });
 
-        return { title: article[0]["title"], desc: article[0]["description"], price: article[0]["price"], image: article[0]["image"].replace("private", ""), rate: article[0]["rate"], date: article[0]["date"], sellerID: sellerID[0]["userId"] };
+        return { title: article[0]["title"], desc: article[0]["description"], price: article[0]["price"], image: article[0]["image"].replace("private", ""), rate: article[0]["rate"], selled: article[0]["selled"], sellerID: sellerID[0]["userId"] };
     },
 
     GetAllArticleInfo: async function () {
@@ -310,10 +310,13 @@ const DBOperations = {
         let allInfos = [];
         for (let article of articlesList) {
             artInfo = article.dataValues;
-            let seller = await this.GetSellerByArtID(article.id);
+            
+            if(!artInfo.selled) { // Affiche que si article en vente
+                let seller = await this.GetSellerByArtID(article.id);
 
-            let info = { id: artInfo.id, title: artInfo.title, desc: artInfo.description, price: artInfo.price, image: artInfo.image.replace("private", ""), rate: artInfo.rate, selled: artInfo.selled, seller: seller };
-            allInfos.push(info);
+                let info = { id: artInfo.id, title: artInfo.title, desc: artInfo.description, price: artInfo.price, image: artInfo.image.replace("private", ""), rate: artInfo.rate, selled: artInfo.selled, seller: seller };
+                allInfos.push(info);
+            }
         }
         return allInfos.reverse();
     },
@@ -324,25 +327,31 @@ const DBOperations = {
         let allInfos = [];
         for (let article of articleListTitle) {
             artInfo = article.dataValues;
-            let seller = await this.GetSellerByArtID(article.id);
 
-            let info = { id: artInfo.id, title: artInfo.title, desc: artInfo.description, price: artInfo.price, image: artInfo.image.replace("private", ""), rate: artInfo.rate, selled: artInfo.selled, seller: seller };
-            allInfos.push(info);
+            if(!artInfo.selled) { // Affiche que si article en vente
+                let seller = await this.GetSellerByArtID(article.id);
+
+                let info = { id: artInfo.id, title: artInfo.title, desc: artInfo.description, price: artInfo.price, image: artInfo.image.replace("private", ""), rate: artInfo.rate, selled: artInfo.selled, seller: seller };
+                allInfos.push(info);
+            }
         }
 
         return allInfos;
     },
 
     GetArticleByPrice: async function () {
-        const articleListPrice = await Article.findAll({ order: ['title'] });
+        const articleListPrice = await Article.findAll({ order: ['price'] });
 
         let allInfos = [];
         for (let article of articleListPrice) {
             artInfo = article.dataValues;
-            let seller = await this.GetSellerByArtID(article.id);
 
-            let info = { id: artInfo.id, title: artInfo.title, desc: artInfo.description, price: artInfo.price, image: artInfo.image.replace("private", ""), rate: artInfo.rate, selled: artInfo.selled, seller: seller };
-            allInfos.push(info);
+            if(!artInfo.selled) { // Affiche que si article en vente
+                let seller = await this.GetSellerByArtID(article.id);
+
+                let info = { id: artInfo.id, title: artInfo.title, desc: artInfo.description, price: artInfo.price, image: artInfo.image.replace("private", ""), rate: artInfo.rate, selled: artInfo.selled, seller: seller };
+                allInfos.push(info);
+            }
         }
 
         return allInfos;
