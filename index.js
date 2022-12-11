@@ -109,7 +109,6 @@ app.get('/profil', async function (req, res, next) {
 
 app.get('/sell', async function (req, res, next) {
     if (!req.session.userID) {
-        console.log("hey")
         req.session.from = "sell"
         res.redirect('/login');
         return
@@ -135,10 +134,14 @@ app.get('/buy', async function (req, res, next) {
     await DBop.isArtIDAvailable(artId).then(async available => { // Display only if artID exists
         if (available) {
             await DBop.GetArticleInfoByID(artId).then(async artInfo => {
-                sellerID = artInfo.sellerID
-                await DBop.GetUsernameByID(sellerID).then(sellerName => {
-                    res.render('buy.ejs', { user: name, title: artInfo["title"], image: artInfo["image"], desc: artInfo["desc"], seller: sellerName, sellerid: sellerID, rate: artInfo["rate"], price: artInfo["price"], id: artId });
-                })
+                if(artInfo.selled === 0){
+                    sellerID = artInfo.sellerID
+                    await DBop.GetUsernameByID(sellerID).then(sellerName => {
+                        res.render('buy.ejs', { user: name, title: artInfo["title"], image: artInfo["image"], desc: artInfo["desc"], seller: sellerName, sellerid: sellerID, rate: artInfo["rate"], price: artInfo["price"], id: artId });
+                    });
+                } else {
+                    res.redirect('/');
+                }
             });
         } else {
             res.redirect("/");
