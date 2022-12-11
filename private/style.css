@@ -154,7 +154,69 @@ header {
 }
 
 
-/* INDEX*/
+/* INDEX vertical
+.order {
+  position: absolute;
+  right: 5%;
+  top: 27%;
+}
+
+.catalogue {
+  left: 25%;
+  position: relative;
+  height: 80vh;
+  width: 50vw;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between; 
+  align-items: center;
+}
+
+.items {
+  width: 30vw;
+  height: 15vh;
+  background-color: #e4fdc4;
+  border: 1px solid black;
+  border-radius: 30px;
+  display: flex;
+  align-items: center;
+  text-align: center;
+  justify-content: space-between; 
+  
+}
+.Book_name{
+  position: relative;
+  left: 20%;
+}
+.books {
+  position: relative;
+  right: 20%;
+  border-radius: 3px;
+  width: 16%;
+  height: 95%;
+  border: 2px solid black;
+  border-radius: 4px;
+  padding: 2px;
+  background-color: white;
+}
+.info {
+  font-size: 10px;
+}
+.achter {
+  border-radius: 30px;
+  width: 25%;
+  height: 102%;
+  cursor: pointer;
+  border: black 1px solid;
+  border-left: none;
+}
+
+.arrow {
+  cursor: pointer;
+}
+*/
+
+/*Version Horizontal*/
 .order {
   position: absolute;
   right: 5%;
@@ -170,7 +232,7 @@ header {
   backdrop-filter: blur(30px);
   align-items: center;
   display: flex;
-  justify-content: space-between;  
+  justify-content: space-around; 
 }
 
 .items {
