@@ -60,10 +60,10 @@ const upload = multer({
 app.get('/', async function (req, res, next) {
     let name = "Connexion"
     let viewPref = true;
-    if (req.session.userID){
+    if (req.session.userID) {
         name = await DBop.GetUsernameByID(req.session.userID); // On modifie name uniquement si le user est connecter
-        viewPref = await DBop.GetHorizontalViewByID(req.session.userID);  
-    } 
+        viewPref = await DBop.GetHorizontalViewByID(req.session.userID);
+    }
 
     if (req.query.btn_search === "searching") { // Using search bar
         let research = '%' + req.query.looking_for + '%';
@@ -74,7 +74,7 @@ app.get('/', async function (req, res, next) {
     } else {
         switch (req.query.tri) { // Sort Mode
             case "name":
-                res.render('index.ejs', { user: name, articleList: await DBop.GetArticlesByName(),viewPref: viewPref });
+                res.render('index.ejs', { user: name, articleList: await DBop.GetArticlesByName(), viewPref: viewPref });
                 break;
 
             case "price":
@@ -138,7 +138,7 @@ app.get('/buy', async function (req, res, next) {
     await DBop.isArtIDAvailable(artId).then(async available => { // Display only if artID exists
         if (available) {
             await DBop.GetArticleInfoByID(artId).then(async artInfo => {
-                if(artInfo.selled === 0){
+                if (artInfo.selled === 0) {
                     sellerID = artInfo.sellerID
                     await DBop.GetUsernameByID(sellerID).then(sellerName => {
                         res.render('buy.ejs', { user: name, title: artInfo["title"], image: artInfo["image"], desc: artInfo["desc"], seller: sellerName, sellerid: sellerID, rate: artInfo["rate"], price: artInfo["price"], id: artId });
@@ -151,6 +151,16 @@ app.get('/buy', async function (req, res, next) {
             res.redirect("/");
         }
     });
+});
+
+app.get('/basket', async function (req, res, next) {
+    let name = "Connexion"
+    if (req.session.userID) name = await DBop.GetUsernameByID(req.session.userID);
+
+
+    if (req.session.basketList == undefined) req.session.basketList = []
+
+    res.render('basket.ejs', { user: name, articleList: req.session.basketList });
 });
 
 // APP POST
@@ -286,32 +296,16 @@ app.post('/sell', upload.single('image'), async function (req, res) {
 
 
 app.post('/buy', async function (req, res) {
-    const userID = req.session.userID
-    if (!userID) {
-        let artid = req.body.id
-        req.session.from = "buy?artID=" + artid
-        return res.redirect('/login');
-    }
+    const artID = req.body.id
+    artInfo = await DBop.GetArticleInfoByID(artID)
 
-    const price = parseFloat(req.body.price)
+    if (req.session.basketList == undefined) req.session.basketList = []
 
-    const userMoney = await DBop.GetMoneyByID(userID);
-
-    const sellerID = req.body.sellerid
-    const sellerMoney = await DBop.GetMoneyByID(sellerID);
+    req.session.basketList.push(artInfo)
 
 
-    try {
-        const newUserMoney = bank.withdraw(userMoney, price)
-        DBop.SetNewMoney(userID, newUserMoney)
+    return res.redirect("/")
 
-        const newSellerMoney = bank.deposit(sellerMoney, price)
-        DBop.SetNewMoney(sellerID, newSellerMoney)
-
-    } catch (err) {
-        console.log(err)
-    }
-    res.redirect("/buy")
 });
 
 // OTHER

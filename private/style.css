@@ -10,7 +10,7 @@ body {
 /* HEADER */
 header {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+  grid-template-columns: 4fr 1fr 16fr 1fr 4fr;
   grid-template-rows: 1fr;
   backdrop-filter: blur(30px);
   background-color: rgba(182, 182, 182, 0.2);
@@ -27,11 +27,24 @@ header {
   grid-column-end: 3;
   grid-row-start: 1;
   grid-row-end: 1;
+  text-align: center;
 }
 
 #title_link {
   text-decoration: none;
   color: black;
+}
+
+#basket {
+  grid-column-start: 4;
+  grid-column-end: 4;
+  grid-row-start: 1;
+  grid-row-end: 1;
+  height: 50%;
+  min-height: 5px;
+  min-width: 5px;
+  width: 90%;
+  margin-top: 20px;
 }
 
 #connexion {
@@ -44,6 +57,7 @@ header {
   min-width: 5px;
   width: 100%;
   margin-top: 20px;
+  float: right;
 }
 
 .search {
@@ -162,7 +176,7 @@ header {
   top: 27%;
 }
 
-.Book_name{
+.Book_name {
   position: relative;
   left: 20%;
 }
@@ -183,7 +197,7 @@ header {
   width: 50vw;
   align-items: center;
   display: flex;
-  justify-content: space-between; 
+  justify-content: space-between;
   flex-direction: column;
 }
 
@@ -196,8 +210,8 @@ header {
   display: flex;
   align-items: center;
   text-align: center;
-  justify-content: space-between; 
-  
+  justify-content: space-between;
+
 }
 
 .booksV {
@@ -231,7 +245,7 @@ header {
   backdrop-filter: blur(30px);
   align-items: center;
   display: flex;
-  justify-content: space-around; 
+  justify-content: space-around;
 }
 
 .itemsH {
@@ -328,7 +342,7 @@ header {
   left: 25%;
   width: 50vw;
   height: 70vh;
-  background-image: linear-gradient(#005AA7,#FFFDE4 );
+  background-image: linear-gradient(#005AA7, #FFFDE4);
   display: flex;
   flex-direction: column;
   align-items: center;

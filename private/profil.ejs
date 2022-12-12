@@ -14,7 +14,7 @@
 
         <h1 class="title"><a href="/" id="title_link">SyllaExchange</a></h1>
 
-        <input type="button" value=<%=user %> id="connexion" onclick="location.href='/login';">
+        <input type="button" value=Basket id="basket" onclick="location.href='/basket';">
 
     </header>
 </head>
@@ -50,54 +50,56 @@
                 <button class="btn-success" type="submit" name="modify" value="money">Modify</button>
             </form>
 
-        <div>
-            <form action="/profil" method="post">
-                <button class="btn-success" type="submit" name="logout" value="logout">Logout</button>
-            </form>
+            <div>
+                <form action="/profil" method="post">
+                    <button class="btn-success" type="submit" name="logout" value="logout">Logout</button>
+                </form>
 
-        <div>
-            <h2 class="text"><strong>Settings</strong></h2>
+                <div>
+                    <h2 class="text"><strong>Settings</strong></h2>
 
-            <form action="/profil" method="post">
-                <label for="night_mode">Night mode: </label>
+                    <form action="/profil" method="post">
+                        <label for="night_mode">Night mode: </label>
 
-                <% if(nightMode) { %>
-                    <input type="checkbox" id="night_mode" name="night_mode" checked>
-                    <% } else { %>
-                        <input type="checkbox" id="night_mode" name="night_mode">
-                        <% } %>
+                        <% if(nightMode) { %>
+                            <input type="checkbox" id="night_mode" name="night_mode" checked>
+                            <% } else { %>
+                                <input type="checkbox" id="night_mode" name="night_mode">
+                                <% } %>
 
-                            <button class="btn-success" type="submit" name="modify" value="nightMode">Modify</button>
-            </form>
+                                    <button class="btn-success" type="submit" name="modify"
+                                        value="nightMode">Modify</button>
+                    </form>
 
-            <form action="/profil" method="post">
-                <label for="privateEmail">Only show pseudo (otherwise email): </label>
+                    <form action="/profil" method="post">
+                        <label for="privateEmail">Only show pseudo (otherwise email): </label>
 
-                <% if(privateEmail) { %>
-                    <input type="checkbox" id="privateEmail" name="privateEmail" checked>
-                    <% } else { %>
-                        <input type="checkbox" id="privateEmail" name="privateEmail">
-                        <% } %>
+                        <% if(privateEmail) { %>
+                            <input type="checkbox" id="privateEmail" name="privateEmail" checked>
+                            <% } else { %>
+                                <input type="checkbox" id="privateEmail" name="privateEmail">
+                                <% } %>
 
-                            <button class="btn-success" type="submit" name="modify" value="privateEmail">Modify</button>
-            </form>
+                                    <button class="btn-success" type="submit" name="modify"
+                                        value="privateEmail">Modify</button>
+                    </form>
 
-            <form action="/profil" method="post">
-                <label for="horizontalView">Horizontal view </label>
+                    <form action="/profil" method="post">
+                        <label for="horizontalView">Horizontal view </label>
 
-                <% if(horizontalView) { %>
-                    <input type="checkbox" id="viehorizontalVieww" name="horizontalView" checked>
-                    <% } else { %>
-                        <input type="checkbox" id="horizontalView" name="horizontalView">
-                        <% } %>
+                        <% if(horizontalView) { %>
+                            <input type="checkbox" id="viehorizontalVieww" name="horizontalView" checked>
+                            <% } else { %>
+                                <input type="checkbox" id="horizontalView" name="horizontalView">
+                                <% } %>
 
-                            <button class="btn-success" type="submit" name="modify"
-                                value="horizontalView">Modify</button>
-            </form>
+                                    <button class="btn-success" type="submit" name="modify"
+                                        value="horizontalView">Modify</button>
+                    </form>
 
-        </div>
-    </div>
-        
+                </div>
+            </div>
+
 
     </main>
 
