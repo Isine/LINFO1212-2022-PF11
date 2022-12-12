@@ -1,10 +1,13 @@
 const DBOperations = require('../database');
 
-let __DEV__ = { id: 5 };
+let __DEV__ = { id: 5, username:"", email: "",  artID: 5 };
 
 beforeAll(async () => {
     const infos = await DBOperations.AddUser("TestUsername", "test@test.com", "test");
-    __DEV__ = { id: infos, username: "TestUsername", email: "test@test.com", password: "test" };
+    __DEV__ = { id: infos, username: "TestUsername", email: "test@test.com" };
+
+    const artInfos = await DBOperations.AddArticle(infos, "articleTitle", "artDescription", 20, "private\test.jpg", 3);
+    __DEV__.artID = artInfos;
 })
   
 
@@ -72,9 +75,70 @@ describe("Getter and Setter of username", () => {
     })
 });
 
+describe("GetArticleInfoByID", () => {
+    test("Get article info", async () => {
+        const infos = await DBOperations.GetArticleInfoByID(__DEV__.artID);
+        const infosExpected = { title: "articleTitle", desc: "artDescription", price: 20, image: "\test.jpg", rate: 3, selled: 0, sellerID: __DEV__.id };
+    
+        expect(infos).toEqual(infosExpected);
+    })
+
+    test("Get article info if it is selled", async () => {
+        await DBOperations.SetArticleSelled(__DEV__.artID, 1)
+        const infos = await DBOperations.GetArticleInfoByID(__DEV__.artID);
+        const infosExpected = { title: "articleTitle", desc: "artDescription", price: 20, image: "\test.jpg", rate: 3, selled: 1, sellerID: __DEV__.id };
+    
+        expect(infos).toEqual(infosExpected);
+    })
+});
+
+describe("isArtIDAvailable", () => {
+    test("Check if articleID 1 exists (it should exists as we at least add one article) (! can fail if id 1 is deleted)", async () => {
+        const isAvailable = await DBOperations.isArtIDAvailable(__DEV__.artID);
+        expect(isAvailable).toBeTruthy();
+    })
+
+    test("Check if articleID -1 exists (it should not exists as ids have positive values)", async () => {
+        const isAvailable = await DBOperations.isArtIDAvailable(-1);
+        expect(isAvailable).toBeFalsy();
+    })
+})
+
+describe("GetArticleFromSearchBar", () => {
+    test("Look for an unexisting item", async () => {
+        const infos = await DBOperations.GetArticleFromSearchBar("imsurethisarticlewillneverbeinsalesoimusingthisnametotestit");
+        const infosExpected = [];
+    
+        expect(infos).toEqual(infosExpected);
+    })
+
+    test("Look for a selled item", async () => {
+        await DBOperations.SetArticleSelled(__DEV__.artID, 1)
+        const infos = await DBOperations.GetArticleFromSearchBar("articleTitle");
+        const infosExpected = [];
+    
+        expect(infos).toEqual(infosExpected);
+    })
+})
+
+describe("GetSellerByArtID", () => {
+    test("Get seller email", async () => {
+        await DBOperations.SetNewPrivateEmail(__DEV__.id, 0);
+        const sellerEmail = await DBOperations.GetSellerByArtID(__DEV__.artID);
+
+        expect(sellerEmail).toMatch(__DEV__.email);
+    })
+    
+    test("Get seller username", async () => {
+        await DBOperations.SetNewPrivateEmail(__DEV__.id, 1);
+        const sellerUsername = await DBOperations.GetSellerByArtID(__DEV__.artID);
+
+        expect(sellerUsername).toMatch(__DEV__.username);
+    })
+})
 
 
 afterAll(async () => {
-    await DBOperations.DeleteUserByID(__DEV__.id, __DEV__.email);
+    await DBOperations.Delete(__DEV__.id,__DEV__.artID);
 })
 

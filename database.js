@@ -295,6 +295,7 @@ const DBOperations = {
         });
 
         sequelize.sync();
+        return newArticle.id;
     },
 
     GetArticleInfoByID: async function (artID) {
@@ -393,19 +394,35 @@ const DBOperations = {
         return sellerEmail[0]["email"]
     },
 
+    SetArticleSelled: async function(artID, isSelled) {
+        await Article.update(
+            { selled:  isSelled},
+            { where: { id: artID } }
+        );
+    },
+
 
     /* USE FOR TEST ONLY */
-    DeleteUserByID : async function(id,email) {
+
+    Delete: async function(userID, artID){
+        await ArticleUser.destroy({
+            where: { artID: artID }
+        }),
+
+        await Article.destroy({
+            where: { id: artID }
+        }),
+
         await Email.destroy({
-            where: { email: email }
-        })
+            where: { userId: userID }
+        }),
 
         await Preferences.destroy({
-            where: { userId: id }
+            where: { userId: userID }
         }),
 
         await User.destroy({
-            where: { id: id }
+            where: { id: userID }
         })
     }
 }
