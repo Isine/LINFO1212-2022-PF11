@@ -44,7 +44,7 @@ const upload = multer({
     storage: storage,
     limits: { fileSize: '1000000' }, // max 1MB
     fileFilter: (req, file, cb) => {
-        const fileType = /jpeg|jpg|png/ //allowed image format
+        const fileType = /jpeg|jpg|png/ //image format allowed
         const mimeType = fileType.test(file.mimetype)
         const extname = fileType.test(path.extname(file.originalname))
 
@@ -138,7 +138,7 @@ app.get('/buy', async function (req, res, next) {
     await DBop.isArtIDAvailable(artId).then(async available => { // Display only if artID exists
         if (available) {
             await DBop.GetArticleInfoByID(artId).then(async artInfo => {
-                if (artInfo.selled === 0) {
+                if(artInfo.selled === 0) {
                     sellerID = artInfo.sellerID
                     await DBop.GetUsernameByID(sellerID).then(sellerName => {
                         res.render('buy.ejs', { user: name, title: artInfo["title"], image: artInfo["image"], desc: artInfo["desc"], seller: sellerName, sellerid: sellerID, rate: artInfo["rate"], price: artInfo["price"], id: artId });
@@ -156,7 +156,6 @@ app.get('/buy', async function (req, res, next) {
 app.get('/basket', async function (req, res, next) {
     let name = "Connexion"
     if (req.session.userID) name = await DBop.GetUsernameByID(req.session.userID);
-
 
     if (req.session.basketList == undefined) req.session.basketList = []
 
@@ -303,9 +302,7 @@ app.post('/buy', async function (req, res) {
 
     req.session.basketList.push(artInfo)
 
-
     return res.redirect("/")
-
 });
 
 // OTHER

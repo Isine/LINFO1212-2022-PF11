@@ -171,7 +171,7 @@ const DBOperations = {
         return -1;
     },
 
-    CheckUniqueIDs: async function (username, email) { //check unique email and pseudo
+    CheckUniqueIDs: async function (username, email) { //check unique email and username
         const existingUsernames = await sequelize.query("SELECT COUNT(*) FROM users WHERE username = ?", { replacements: [username], type: QueryTypes.SELECT })
         const existingEmails = await sequelize.query("SELECT COUNT(*) FROM emails WHERE email = ?", { replacements: [email], type: QueryTypes.SELECT })
 
@@ -391,8 +391,25 @@ const DBOperations = {
 
         let sellerEmail = await sequelize.query("SELECT email FROM emails WHERE userId = ?", { replacements: [sellerID[0]["userId"]], type: QueryTypes.SELECT });
         return sellerEmail[0]["email"]
+    },
+
+
+    /* USE FOR TEST ONLY */
+    DeleteUserByID : async function(id,email) {
+        await Email.destroy({
+            where: { email: email }
+        })
+
+        await Preferences.destroy({
+            where: { userId: id }
+        }),
+
+        await User.destroy({
+            where: { id: id }
+        })
     }
 }
+
 
 module.exports = DBOperations;
 
