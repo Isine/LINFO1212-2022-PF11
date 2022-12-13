@@ -9,7 +9,7 @@ const multer = require('multer'); // use for image
 const path = require('path'); // use for image
 
 const bank = require('./private/bank')
-
+const utility = require('./private/utility')
 
 const app = express();
 
@@ -138,7 +138,7 @@ app.get('/buy', async function (req, res, next) {
     await DBop.isArtIDAvailable(artId).then(async available => { // Display only if artID exists
         if (available) {
             await DBop.GetArticleInfoByID(artId).then(async artInfo => {
-                if(artInfo.selled === 0) {
+                if (artInfo.selled === 0) {
                     sellerID = artInfo.sellerID
                     await DBop.GetUsernameByID(sellerID).then(sellerName => {
                         res.render('buy.ejs', { user: name, title: artInfo["title"], image: artInfo["image"], desc: artInfo["desc"], seller: sellerName, sellerid: sellerID, rate: artInfo["rate"], price: artInfo["price"], id: artId });
@@ -158,6 +158,7 @@ app.get('/basket', async function (req, res, next) {
     if (req.session.userID) name = await DBop.GetUsernameByID(req.session.userID);
 
     if (req.session.basketList == undefined) req.session.basketList = []
+
 
     res.render('basket.ejs', { user: name, articleList: req.session.basketList });
 });
@@ -300,7 +301,14 @@ app.post('/buy', async function (req, res) {
 
     if (req.session.basketList == undefined) req.session.basketList = []
 
-    req.session.basketList.push(artInfo)
+    let notInBasket = true
+    req.session.basketList.forEach(element => {
+        if (utility.compareDictionaries(element, artInfo) || artInfo["selled"] != 0) {
+            notInBasket = false
+            return
+        }
+    });
+    if (notInBasket) req.session.basketList.push(artInfo)
 
     return res.redirect("/")
 });
