@@ -207,7 +207,7 @@ const DBOperations = {
         if (typeof moneyFromId !== 'undefined' && typeof moneyFromId[0] !== 'undefined' && typeof moneyFromId[0]['money'] !== 'undefined') {
             return moneyFromId[0]["money"];
         }
-    }, // nightmode, view, private
+    },
 
     GetNightModeByID: async function (id) {
         const hasNightMode = await sequelize.query("SELECT nightMode FROM preferences WHERE userId = ?", { replacements: [id], type: QueryTypes.SELECT });
@@ -408,6 +408,11 @@ const DBOperations = {
         );
     },
 
+    GetBoughtArticleOf: async function (userID) {
+        const articles = await sequelize.query("SELECT id FROM articles WHERE buyer = ?", { replacements: [userID], type: QueryTypes.SELECT });
+        return articles;
+    },
+
     /* USE FOR TEST ONLY */
 
     Delete: async function (userID, artID) {
@@ -415,21 +420,21 @@ const DBOperations = {
             where: { artID: artID }
         }),
 
-            await Article.destroy({
-                where: { id: artID }
-            }),
+        await Article.destroy({
+            where: { id: artID }
+        }),
 
-            await Email.destroy({
-                where: { userId: userID }
-            }),
+        await Email.destroy({
+            where: { userId: userID }
+        }),
 
-            await Preferences.destroy({
-                where: { userId: userID }
-            }),
+        await Preferences.destroy({
+            where: { userId: userID }
+        }),
 
-            await User.destroy({
-                where: { id: userID }
-            })
+        await User.destroy({
+            where: { id: userID }
+        })
     }
 }
 

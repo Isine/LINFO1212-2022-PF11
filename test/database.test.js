@@ -137,6 +137,15 @@ describe("GetSellerByArtID", () => {
     })
 })
 
+describe("SetArticleBuyer and GetBoughtArticleOf", () => {
+    test("Set article buyer and GetBoughtArticleOf", async () => {
+        await DBOperations.SetArticleBuyer(__DEV__.artID, __DEV__.id);
+        const articles = await DBOperations.GetBoughtArticleOf(__DEV__.id);
+
+        expect(articles).toEqual([{"id": __DEV__.artID}]);
+    })
+})
+
 
 afterAll(async () => {
     await DBOperations.Delete(__DEV__.id,__DEV__.artID);

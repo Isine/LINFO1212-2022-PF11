@@ -350,18 +350,20 @@ app.post('/acheter', async function (req, res) {
         return res.redirect('/login');
     }
 
-
     if (parseFloat(req.body.money) < parseFloat(req.body.price)) return res.redirect("/basket?error=1")
 
-    req.session.basketList.forEach(element => {
-        const buyerMoney = DBop.GetMoneyByID(req.session.userID)
-        const sellerMoney = DBop.GetMoneyByID(element.sellerID)
+    req.session.basketList.forEach(async element => {
         const price = element.price
 
-        const newBuyerMoney = bank.withdraw(buyerMoney, price)
-        const newSellerMoney = bank.deposit(sellerMoney, price)
-        DBop.SetNewMoney(req.session.userID, newBuyerMoney)
-        DBop.SetNewMoney(element.sellerID, newSellerMoney)
+        await DBop.GetMoneyByID(req.session.userID).then(async amount => { // First withdraw money from buyer
+            const newBuyerMoney = bank.withdraw(amount, price);
+            await DBop.SetNewMoney(req.session.userID, newBuyerMoney)
+        })
+
+        await DBop.GetMoneyByID(element.sellerID).then(async amount => { // Then deposit money on seller account
+            const newSellerMoney = bank.deposit(amount, price)
+            await DBop.SetNewMoney(element.sellerID, newSellerMoney)
+        })
 
         DBop.SetArticleSelled(element.id, true)
         DBop.SetArticleBuyer(element.id, req.session.userID)
