@@ -35,7 +35,7 @@ header {
   color: black;
 }
 
-#basket {
+#basketLogo {
   grid-column-start: 4;
   grid-column-end: 4;
   grid-row-start: 1;
@@ -45,6 +45,8 @@ header {
   min-width: 5px;
   width: 90%;
   margin-top: 20px;
+
+  font-size: xx-large;
 }
 
 #connexion {
@@ -61,36 +63,64 @@ header {
 }
 
 .search {
-  position: absolute;
-  top: 20%;
-  right: 1%;
+  /* position: absolute; */
+
+  grid-column-start: 3;
+  grid-column-end: 3;
+  grid-row-start: 1;
+  grid-row-end: 1;
+  float: left;
+
+
   background-color: rgb(255, 255, 255, 0.1s);
-  width: 300px;
-  height: 50px;
-  display: flex;
-  align-items: center;
+
+  height: 30px;
+
+  display: grid;
+  grid-template-columns: 7fr 1fr;
+  grid-template-rows: 1fr;
   border-radius: 30px;
   justify-content: center;
 }
 
 #input_search {
-  width: 60%;
-  height: 18px;
-  border-radius: 50px;
+  grid-column-start: 1;
+  grid-column-end: 1;
+  grid-row-start: 1;
+  grid-row-end: 1;
+  border-top-left-radius: 20px;
+  border-bottom-left-radius: 20px;
 }
 
 #button_search {
+  grid-column-start: 2;
+  grid-column-end: 2;
+  grid-row-start: 1;
+  grid-row-end: 1;
   border: none;
-  border-radius: 30%;
+  border-top-right-radius: 20px;
+  border-bottom-right-radius: 20px;
   cursor: pointer;
   background-color: rgb(74, 68, 68);
   text-shadow: 1px 1px 1px #000;
-  height: 25px;
-  width: 30%;
 }
 
 #button_search:hover {
   background-color: rgb(53, 49, 49);
+}
+
+
+#indexLayout {
+  display: grid;
+  grid-template-columns: 1fr 6fr 1fr;
+  grid-template-rows: 1fr 1fr 20fr;
+}
+
+#sellLink {
+  grid-column-start: 1;
+  grid-column-end: 1;
+  grid-row-start: 1;
+  grid-row-end: 1;
 }
 
 /* REGISTER AND LOGIN */
@@ -171,9 +201,14 @@ header {
 /* AFFICHAGE DES ARTICLES */
 /* PARTIE COMMUNE */
 .order {
-  position: absolute;
-  right: 5%;
-  top: 27%;
+  grid-column-start: 3;
+  grid-column-end: 3;
+  grid-row-start: 2;
+  grid-row-end: 2;
+  width: 70%;
+  height: 30px;
+  float: right;
+  border-radius: 20px;
 }
 
 .Book_name {
@@ -191,10 +226,14 @@ header {
 
 /* AFFICHAGE VERTICAL */
 .catalogueV {
-  left: 25%;
+  /* left: 25%; */
+  grid-column-start: 2;
+  grid-column-end: 2;
+  grid-row-start: 3;
+  grid-row-end: 3;
+
   position: relative;
   height: 80vh;
-  width: 50vw;
   align-items: center;
   display: flex;
   justify-content: space-between;
@@ -237,6 +276,12 @@ header {
 
 /* AFFICHAGE HORIZONTAL */
 .catalogueH {
+
+  grid-column-start: 1;
+  grid-column-end: 3;
+  grid-row-start: 3;
+  grid-row-end: 3;
+
   top: 10vh;
   left: 10%;
   position: relative;
@@ -348,7 +393,6 @@ header {
   align-items: center;
   justify-content: space-around;
   border-radius: 30px;
-
 }
 
 .text {
@@ -360,4 +404,42 @@ header {
   border-radius: 30px;
   background-image: linear-gradient(yellow, orange);
   cursor: pointer;
+  float: right;
+  width: 80px;
+  height: 30px;
+}
+
+/* BASKET */
+
+.line {
+  float: left;
+}
+
+#basketPageLayout {
+  display: grid;
+  grid-template-columns: 1fr 4fr 1fr;
+  grid-template-rows: 1fr 1fr;
+}
+
+#summary {
+  font-size: larger;
+  height: 20vh;
+  background-image: linear-gradient(#005AA7, #FFFDE4);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+  border-radius: 30px;
+
+  grid-column-start: 3;
+  grid-column-end: 3;
+  grid-row-start: 1;
+  grid-row-end: 1;
+}
+
+#basketItem {
+  grid-column-start: 2;
+  grid-column-end: 2;
+  grid-row-start: 1;
+  grid-row-end: 2;
 }

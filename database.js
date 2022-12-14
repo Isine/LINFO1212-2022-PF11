@@ -158,10 +158,10 @@ const DBOperations = {
 
     LoginUser: async function (email, password) {
         let userIDFromEmail = await sequelize.query("SELECT userId FROM emails WHERE email = ?", { replacements: [email], type: QueryTypes.SELECT });
-        
+
         if (typeof userIDFromEmail !== 'undefined' && typeof userIDFromEmail[0] !== 'undefined' && typeof userIDFromEmail[0]['userId'] !== 'undefined') {
             let passwordOfID = await sequelize.query("SELECT password FROM users WHERE id = ?", { replacements: [userIDFromEmail[0]['userId']], type: QueryTypes.SELECT });
-            
+
             if (typeof passwordOfID !== 'undefined' && typeof passwordOfID[0] !== 'undefined' && typeof passwordOfID[0]['password'] !== 'undefined') {
                 if (passwordOfID[0]['password'] === await sha256(password)) {
                     return userIDFromEmail[0]['userId'];
@@ -211,19 +211,19 @@ const DBOperations = {
 
     GetNightModeByID: async function (id) {
         const hasNightMode = await sequelize.query("SELECT nightMode FROM preferences WHERE userId = ?", { replacements: [id], type: QueryTypes.SELECT });
-        
+
         return hasNightMode[0]["nightMode"] === 1 ? true : false;
     },
 
     GetPrivateEmailByID: async function (id) {
         const hasNightMode = await sequelize.query("SELECT privateEmail FROM preferences WHERE userId = ?", { replacements: [id], type: QueryTypes.SELECT });
-        
+
         return hasNightMode[0]["privateEmail"] === 1 ? true : false;
     },
 
     GetHorizontalViewByID: async function (id) {
         const hasNightMode = await sequelize.query("SELECT horizontalView FROM preferences WHERE userId = ?", { replacements: [id], type: QueryTypes.SELECT });
-        
+
         return hasNightMode[0]["horizontalView"] === 1 ? true : false;
     },
 
@@ -311,8 +311,8 @@ const DBOperations = {
         let allInfos = [];
         for (let article of articlesList) {
             artInfo = article.dataValues;
-            
-            if(!artInfo.selled) { // Affiche que si article en vente
+
+            if (!artInfo.selled) { // Affiche que si article en vente
                 let seller = await this.GetSellerByArtID(article.id);
 
                 let info = { id: artInfo.id, title: artInfo.title, desc: artInfo.description, price: artInfo.price, image: artInfo.image.replace("private", ""), rate: artInfo.rate, selled: artInfo.selled, seller: seller };
@@ -329,7 +329,7 @@ const DBOperations = {
         for (let article of articleListTitle) {
             artInfo = article.dataValues;
 
-            if(!artInfo.selled) { // Affiche que si article en vente
+            if (!artInfo.selled) { // Affiche que si article en vente
                 let seller = await this.GetSellerByArtID(article.id);
 
                 let info = { id: artInfo.id, title: artInfo.title, desc: artInfo.description, price: artInfo.price, image: artInfo.image.replace("private", ""), rate: artInfo.rate, selled: artInfo.selled, seller: seller };
@@ -347,7 +347,7 @@ const DBOperations = {
         for (let article of articleListPrice) {
             artInfo = article.dataValues;
 
-            if(!artInfo.selled) { // Affiche que si article en vente
+            if (!artInfo.selled) { // Affiche que si article en vente
                 let seller = await this.GetSellerByArtID(article.id);
 
                 let info = { id: artInfo.id, title: artInfo.title, desc: artInfo.description, price: artInfo.price, image: artInfo.image.replace("private", ""), rate: artInfo.rate, selled: artInfo.selled, seller: seller };
@@ -367,25 +367,25 @@ const DBOperations = {
     },
 
     GetArticleFromSearchBar: async function (title) {
-        const articles = await sequelize.query("SELECT * FROM articles WHERE title LIKE ?", { replacements:[title], type: QueryTypes.SELECT });
+        const articles = await sequelize.query("SELECT * FROM articles WHERE title LIKE ?", { replacements: [title], type: QueryTypes.SELECT });
 
         let allInfos = [];
         for (let article of articles) {
-            if(!article.selled) { // Affiche que si article en vente
+            if (!article.selled) { // Affiche que si article en vente
                 let seller = await this.GetSellerByArtID(article.id);
                 let info = { id: article.id, title: article.title, desc: article.description, price: article.price, image: article.image.replace("private", ""), rate: article.rate, selled: article.selled, seller: seller };
-            
-                allInfos.push(info);  
+
+                allInfos.push(info);
             }
         }
         return allInfos;
     },
 
-    GetSellerByArtID: async function(artID) {
+    GetSellerByArtID: async function (artID) {
         const sellerID = await sequelize.query("SELECT userId FROM articleUsers WHERE ArtId = ?", { replacements: [artID], type: QueryTypes.SELECT });
         let isPrivate = await sequelize.query("SELECT privateEmail FROM preferences WHERE userId = ?", { replacements: [sellerID[0]["userId"]], type: QueryTypes.SELECT });
-        
-        if(isPrivate[0]["privateEmail"] === 1) {
+
+        if (isPrivate[0]["privateEmail"] === 1) {
             let sellerUsername = await sequelize.query("SELECT username FROM users WHERE id = ?", { replacements: [sellerID[0]["userId"]], type: QueryTypes.SELECT });
             return sellerUsername[0]["username"]
         }
@@ -394,36 +394,42 @@ const DBOperations = {
         return sellerEmail[0]["email"]
     },
 
-    SetArticleSelled: async function(artID, isSelled) {
+    SetArticleSelled: async function (artID, isSelled) {
         await Article.update(
-            { selled:  isSelled},
+            { selled: isSelled },
             { where: { id: artID } }
         );
     },
 
+    SetArticleBuyer: async function (artID, buyerID) {
+        await Article.update(
+            { buyer: buyerID },
+            { where: { id: artID } }
+        );
+    },
 
     /* USE FOR TEST ONLY */
 
-    Delete: async function(userID, artID){
+    Delete: async function (userID, artID) {
         await ArticleUser.destroy({
             where: { artID: artID }
         }),
 
-        await Article.destroy({
-            where: { id: artID }
-        }),
+            await Article.destroy({
+                where: { id: artID }
+            }),
 
-        await Email.destroy({
-            where: { userId: userID }
-        }),
+            await Email.destroy({
+                where: { userId: userID }
+            }),
 
-        await Preferences.destroy({
-            where: { userId: userID }
-        }),
+            await Preferences.destroy({
+                where: { userId: userID }
+            }),
 
-        await User.destroy({
-            where: { id: userID }
-        })
+            await User.destroy({
+                where: { id: userID }
+            })
     }
 }
 
