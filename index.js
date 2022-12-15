@@ -59,7 +59,7 @@ const upload = multer({
 
 app.get('/', async function (req, res, next) {
     let name = "Connexion"
-    let viewPref = true;
+    let viewPref = false;
     if (req.session.userID) {
         name = await DBop.GetUsernameByID(req.session.userID); // On modifie name uniquement si le user est connecter
         viewPref = await DBop.GetHorizontalViewByID(req.session.userID);

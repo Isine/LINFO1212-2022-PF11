@@ -44,56 +44,43 @@
 
     <% if(viewPref) { %>
       <!-- horizontal view -->
-    <div class="articles-container">
-      <table cellspacing="10" class="wrapper">
-        <% articleList.forEach(function(article){ %>
-          <tr class="case">
-            <td class="image-cell">
-              <div class="image-container">
-                <img class="art-image" src=<%= article.image %> alt="article image">
-              </div>
-            </td>
-            <td class="title-cell">
-              <strong><u><h1 class="art-title"><%= article.title %></h1 ></u></strong>
-            </td>
-            <td class="art-elem">
-              <h2 class="art-price"><%= article.price %>€</h2>
-            </td>
-            <td class="art-elem">
-              <div class="art-btn">
-                <button class="art-buy" onclick="location.href='/buy?artID=<%= article.id %>';">BUY</button>
-              </div>
-            </td>
-          </tr>
-        <% }) %> 
-      </table>
-    </div>
+      <div class="vertical-wrapper">
+        <section class="vertical-articles-container">
+          <% articleList.forEach(function(article){ %>
+            <article class="book">
+              <img src=<%= article.image %> alt="Syllabus-image">
+              <strong><u><h1 class="vertical-book-price"><%= article.title %></h1 ></u></strong>
+              <h2 class="vertical-book-price"><%= article.price %>€</h2>
+              <button onclick="location.href='/buy?artID=<%= article.id %>';">Buy</button>
+            </article>
+          <% }) %>
+        </section>
+      </div>
     <% } else { %>
       <!-- vertical view -->
-      <div class="catalogueV">
-        <img class="arrow" src="/private/images/FlêcheG.png" alt="">
-
-        <% articleList.forEach(function(article){ %>
-          <div class="itemsV">
-            <p class="Book_name">
-              <%= article.title %>
-            </p>
-            <img src=<%=article.image %> alt="Syllabus-image" class="booksV">
-            <div class="info">
-              <h2>
-                <%= article.price %> €
-              </h2>
-              <h2>
-                <%= article.desc %>
-              </h2>
-              <h2> Selled by <%= article.seller %>
-              </h2>
-            </div>
-            <button class="acheterV" onclick="location.href='/buy?artID=<%= article.id %>';">
-              Buy
-            </button>
-          </div>
-          <% }) %>
+      <div class="articles-container">
+        <table cellspacing="10" class="wrapper">
+          <% articleList.forEach(function(article){ %>
+            <tr class="case">
+              <td class="image-cell">
+                <div class="image-container">
+                  <img class="art-image" src=<%= article.image %> alt="article image">
+                </div>
+              </td>
+              <td class="title-cell">
+                <strong><u><h1 class="art-title"><%= article.title %></h1 ></u></strong>
+              </td>
+              <td class="art-elem">
+                <h2 class="art-price"><%= article.price %>€</h2>
+              </td>
+              <td class="art-elem">
+                <div class="art-btn">
+                  <button class="art-buy" onclick="location.href='/buy?artID=<%= article.id %>';">BUY</button>
+                </div>
+              </td>
+            </tr>
+          <% }) %> 
+        </table>
       </div>
     <% } %>
   </div>
