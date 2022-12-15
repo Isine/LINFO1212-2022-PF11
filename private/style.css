@@ -178,7 +178,9 @@ header {
 
 .Book_name {
   position: relative;
-  left: 20%;
+  text-decoration: underline;
+  text-transform: uppercase;
+
 }
 
 .info {
@@ -200,7 +202,6 @@ header {
   justify-content: space-between;
   flex-direction: column;
 }
-
 .itemsV {
   width: 30vw;
   height: 15vh;
@@ -277,35 +278,36 @@ header {
 }
 
 /* BUY */
-.name {
+.Name {
   position: relative;
   left: 25%;
   text-decoration: underline;
 }
 
 .selling {
-  border-radius: 1em;
+  border-radius: 5%;
   position: relative;
   left: 25%;
   display: flex;
-  width: 60em;
-  height: 47em;
+  width: 50%;
+  height: 35%;
   justify-content: space-between;
   background-image: linear-gradient(#fbc2eb, #a6c1ee)
 }
 
 .txt {
-  margin: 1em;
+  margin: 10px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 30em;
-  border: #000 0.1em solid;
+  width: 50%;
+  border: #000  1px solid;
 }
 
 .resume {
   color: rgb(121, 37, 18);
-  height: 10em;
+  height: auto;
+  width: auto;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -315,11 +317,16 @@ header {
   cursor: pointer;
   border-radius: 30px;
   border-top: none;
+  color: #005AA7;
 }
 
 .imagedulivre {
+  width: 50%;
+  padding: 3px;
   margin: 1em;
-  border: #000 0.1em solid;
+  border: #000 1px solid;
+  background-color: white;
+  
 }
 
 
