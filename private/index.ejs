@@ -22,16 +22,18 @@
 
 <body>
   <hr>
-  <div id="indexLayout">
 
-    <a id="sellLink" href="/sell">Sell a syllabus</a>
+  <main class="main">
+    <a id="sell-link" href="/sell">Sell a syllabus</a>
 
 
     <form action="/" method="get" class="search">
-      <input id="input_search" type="text" placeholder="Recherche" name="looking_for" required>
+      <input id="input_search" type="text" placeholder="Search" name="looking_for" required>
       <button id="button_search" type="submit" name="btn_search" value="searching">🔎</button>
     </form>
 
+    <br>
+    <br>
 
     <select class="order" name="order" id="sortMode" onchange="location.href='/?tri='+this.value">
       <option value="" selected="selected" hidden="hidden">Order By</option>
@@ -42,18 +44,41 @@
 
     <% if(viewPref) { %>
       <!-- horizontal view -->
-
-
-
-      <div class="catalogueH">
+    <div class="articles-container">
+      <table cellspacing="10" class="wrapper">
+        <% articleList.forEach(function(article){ %>
+          <tr class="case">
+            <td class="image-cell">
+              <div class="image-container">
+                <img class="art-image" src=<%= article.image %> alt="article image">
+              </div>
+            </td>
+            <td class="title-cell">
+              <strong><u><h1 class="art-title"><%= article.title %></h1 ></u></strong>
+            </td>
+            <td class="art-elem">
+              <h2 class="art-price"><%= article.price %>€</h2>
+            </td>
+            <td class="art-elem">
+              <div class="art-btn">
+                <button class="art-buy" onclick="location.href='/buy?artID=<%= article.id %>';">BUY</button>
+              </div>
+            </td>
+          </tr>
+        <% }) %> 
+      </table>
+    </div>
+    <% } else { %>
+      <!-- vertical view -->
+      <div class="catalogueV">
         <img class="arrow" src="/private/images/FlêcheG.png" alt="">
 
         <% articleList.forEach(function(article){ %>
-          <div class="itemsH">
+          <div class="itemsV">
             <p class="Book_name">
               <%= article.title %>
             </p>
-            <img src=<%=article.image %> alt="Syllabus-image" class="booksH">
+            <img src=<%=article.image %> alt="Syllabus-image" class="booksV">
             <div class="info">
               <h2>
                 <%= article.price %> €
@@ -61,48 +86,19 @@
               <h2>
                 <%= article.desc %>
               </h2>
-              <h2> vendu par <%= article.seller %>
+              <h2> Selled by <%= article.seller %>
               </h2>
             </div>
-            <button class="acheterH" onclick="location.href='/buy?artID=<%= article.id %>';">
-              Acheter
+            <button class="acheterV" onclick="location.href='/buy?artID=<%= article.id %>';">
+              Buy
             </button>
           </div>
           <% }) %>
       </div>
-
-
-      <% } else { %>
-        <!-- vertical view -->
-        <div class="catalogueV">
-          <img class="arrow" src="/private/images/FlêcheG.png" alt="">
-
-          <% articleList.forEach(function(article){ %>
-            <div class="itemsV">
-              <p class="Book_name">
-                <%= article.title %>
-              </p>
-              <img src=<%=article.image %> alt="Syllabus-image" class="booksV">
-              <div class="info">
-                <h2>
-                  <%= article.price %> €
-                </h2>
-                <h2>
-                  <%= article.desc %>
-                </h2>
-                <h2> vendu par <%= article.seller %>
-                </h2>
-              </div>
-              <button class="acheterV" onclick="location.href='/buy?artID=<%= article.id %>';">
-                Acheter
-              </button>
-            </div>
-            <% }) %>
-        </div>
-
-
-        <% } %>
+    <% } %>
   </div>
+</main>
+      
 </body>
 
 </html>

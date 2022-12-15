@@ -22,7 +22,10 @@
 </head>
 
 <body> <!-- inspired from http://frontendfreecode.com/register-login-form-with-tabs-using-bootstrap -->
-  <div class="inner cover">
+
+  <hr>
+
+  <div class="inner box">
     <div class="panel panel-default">
 
       <div class="panel-body">
@@ -35,7 +38,7 @@
         <div class="tab-content">
           <div id="pane1" class="tab-pane fade in active">
 
-            <form action="" method="POST">
+            <form action="" method="post">
               <fieldset>
                 <label class="control-label" for="username">Username</label>
                 <input type="text" id="username" name="username" placeholder="Username" class="form-control" required />
@@ -51,20 +54,20 @@
                 <input type="password" id="password_confirm" name="password_confirm" placeholder="Confirm password"
                   class="form-control" required />
 
-                <button class="btn btn-success" name="btn" value="register">Register</button>
+                <button class="btn-success" name="btn" value="register">Register</button>
               </fieldset>
             </form>
           </div>
 
           <div id="pane2" class="tab-pane fade">
-            <form role="form" action="" method="POST">
+            <form role="form" action="" method="post">
               <label for="email">Email address</label>
-              <input type="email" class="form-control" name="email" id="email" placeholder="Enter email" />
+              <input type="email" class="form-control" name="email" id="email" placeholder="Email" />
 
               <label for="password">Password</label>
               <input type="password" class="form-control" name="password" id="password" placeholder="Password" />
 
-              <button type="submit" class="btn btn-success" name="btn" value="login">Login</button>
+              <button type="submit" class="btn-success" name="btn" value="login">Login</button>
             </form>
           </div>
         </div>
@@ -74,8 +77,8 @@
   </div>
 
   <div>
-    <h4>
-      <%= error %>
+    <h4 class="error">
+      <strong><%= error %></strong>
     </h4>
   </div>
 

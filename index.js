@@ -109,7 +109,7 @@ app.get('/profil', async function (req, res, next) {
 
         let purchases =  await DBop.GetBoughtArticleOf(req.session.userID);
 
-        res.render('profil.ejs', { user: name, money: money, email: email, nightMode: nightMode, privateEmail: privateEmail, horizontalView: horizontalView, purchases: purchases });
+        res.render('profil.ejs', { user: name, money: money, email: email, nightMode: nightMode, privateEmail: privateEmail, horizontalView: horizontalView, purchases: purchases.reverse() });
     }
 });
 
@@ -312,6 +312,7 @@ app.post('/buy', async function (req, res) {
     const artID = req.body.id
     artInfo = await DBop.GetArticleInfoByID(artID)
     artInfo["id"] = artID
+    artInfo["seller"] = await DBop.GetSellerByArtID(artID);
 
     if (req.session.basketList == undefined) req.session.basketList = []
 

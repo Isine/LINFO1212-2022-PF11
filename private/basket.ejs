@@ -21,35 +21,97 @@
 
 <body>
   <hr>
-  <div id="basketPageLayout">
-    <div class="catalogueV" id="basketItem">
-      <img class="arrow" src="/private/images/FlêcheG.png" alt="">
+  <main class="basket-container">
+    <div class="articles">
+      <table cellspacing="10" class="wrapper">
+
+        <% articleList.forEach(function(article){ %>
+          <tr class="case">
+            <td>
+              <img class="book-img" src=<%=article.image %> alt="article image">
+            </td>
+            <td>
+              <strong><u><h2 class="book_name"><%=article.title %></h2></u></strong>
+            </td>
+            <td>
+              <div class="info">
+                <h2><%=article.price %>€</h2>
+                <h4><%=article.desc %></h4>
+                <h4>Selled by:<br> <%= article.seller %></h4>
+                <form action="/removeFromBasket" method="post">
+                  <input type="hidden" name="artID" value=<%= article.id %>>
+                  <button type="submit" value="searching">🗑</button>
+                </form>
+              
+              </div>
+            </td>
+          </tr>
+        <% }) %>
+      </table>
+    </div>
+    <div class="summary">
+      <div id="summary">
+        <form action="/acheter" method="post">
+          <div class="line">
+            <label>Actual money: <%= money %></label>
+          </div>
+          <br>
+          <div class="line">
+            <label>Total price: <%= totalPrice %>€</label>
+          </div>
+          <br>
+          <div class="line">
+            <% if(!isNaN(money)) {%>
+              <% if(money - totalPrice < 0) {%>
+                <label>Not enough money</label>
+              <% } else { %>
+                <label>Remaining money: <%= money - totalPrice %>€</label>
+                <button type="submit" class="btn btn-success" name="btn" value="register">Acheter</button>
+              <% } %>
+            <% } %>
+          </div>
+          <div class="line">
+            <label> <%=message%> </label>
+          </div>
+          <br>
+          <br>
+          
+        </form>
+      </div>
+    </div>
+
+  </main>
+</body>
+
+
+<!--
+<body>
+  <hr>
+  <main class="container">
+    <table cellspacing="10" class="wrapper">
 
       <% articleList.forEach(function(article){ %>
-        <form action="/removeFromBasket" method="post">
-          <input type="hidden" name="artID" value=<%=article.id %>>
-          <div class="itemsV">
-            <p class="Book_name">
-              <%= article.title %>
-            </p>
-            <img src=<%=article.image %> alt="Syllabus-image" class="booksV">
-            <div class="info">
-              <h2>
-                <%= article.price %> €
-              </h2>
-              <h2>
-                <%= article.desc %>
-              </h2>
-              <h2> vendu par <%= article.seller %>
-              </h2>
+          <tr class="case">
+            <td>
+                <img class="book-img" src=<%=article.image %> alt="article image">
+            </td>
+            <td>
+                <strong><u><h2 class="book_name"><%=article.title %></h2></u></strong>
+            </td>
+            <td>
+                <div class="info">
+                    <h2><%=article.price %>€</h2>
+                    <h4><%=article.desc %></h4>
+                    <h4>Selled by:<br> <%=article.seller %></h4>
+                    <button type="submit" value="searching">🗑</button>
+                </div>
+            </td>
+          </tr>
+      <% }) %>
+  </table>
+  </main>
+  
 
-              <button type="submit" value="searching">🗑</button>
-
-            </div>
-        </form>
-    </div>
-    <% }) %>
-  </div>
 
   <div id="summary">
     <form action="/acheter" method="post">
@@ -75,4 +137,5 @@
   </div>
 </body>
 
+-->
 </html>

@@ -15,8 +15,7 @@
     <h1 class="title"><a href="/" id="title_link">SyllaExchange</a></h1>
 
     <input type="button" value=🛒 id="basketLogo" onclick="location.href='/basket';">
-    <!-- lien pour upload img: https://www.bezkoder.com/node-js-upload-image-mysql/ -->
-    <input type="button" value=<%=user %> id="connexion" onclick="location.href='/login';">
+    <input type="button" value=<%= user %> id="connexion" onclick="location.href='/login';">
 
   </header>
 </head>
@@ -25,18 +24,19 @@
   <hr>
 
   <form class="SellProduct" action="/sell" method="post" enctype="multipart/form-data">
-    <label for="title"><strong>Titre:</strong></label>
-    <input type="text" name="title" placeholder="Titre" required />
+    <label for="title"><strong>Titke:</strong></label>
+    <input type="text" name="title" placeholder="Title" required />
 
     <label for="description"><strong>Description:</strong></label>
-    <textarea name="description" placeholder="Description" cols="25" rows="5" style="height:200px" required></textarea>
+    <textarea class="sell-description" name="description" placeholder="Description" cols="25" rows="5" required></textarea>
 
     <label for="price"><strong>Price:</strong></label>
     <input type="number" name="price" min="0" placeholder="Price" required />
 
     <label for="image"><strong>Image:</strong></label>
-    <input type="file" name="image" placeholder="Image" required />
+    <input type="file" name="image" required />
 
+    <label for="stars"><strong>State:</strong></label>
     <div class="star-rating">
       <input type="radio" name="stars" id="star-a" value="5" />
       <label for="star-a"></label>

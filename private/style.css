@@ -41,7 +41,7 @@ header {
   grid-row-start: 1;
   grid-row-end: 1;
   height: 50%;
-  min-height: 5px;
+  min-height: 45px;
   min-width: 5px;
   width: 90%;
   margin-top: 20px;
@@ -60,27 +60,6 @@ header {
   width: 100%;
   margin-top: 20px;
   float: right;
-}
-
-.search {
-  /* position: absolute; */
-
-  grid-column-start: 3;
-  grid-column-end: 3;
-  grid-row-start: 1;
-  grid-row-end: 1;
-  float: left;
-
-
-  background-color: rgb(255, 255, 255, 0.1s);
-
-  height: 30px;
-
-  display: grid;
-  grid-template-columns: 7fr 1fr;
-  grid-template-rows: 1fr;
-  border-radius: 30px;
-  justify-content: center;
 }
 
 #input_search {
@@ -113,7 +92,7 @@ header {
 #indexLayout {
   display: grid;
   grid-template-columns: 1fr 6fr 1fr;
-  grid-template-rows: 1fr 1fr 20fr;
+  grid-template-rows: 1fr 1fr 2fr;
 }
 
 #sellLink {
@@ -123,17 +102,12 @@ header {
   grid-row-end: 1;
 }
 
-/* REGISTER AND LOGIN */
-.cover {
-  width: 400px;
-  margin: 0 auto;
-}
-
 .mastfoot {
   padding-top: 0px;
   text-align: center;
   margin: auto;
 }
+
 
 
 /* SELL STAR */
@@ -200,16 +174,6 @@ header {
 
 /* AFFICHAGE DES ARTICLES */
 /* PARTIE COMMUNE */
-.order {
-  grid-column-start: 3;
-  grid-column-end: 3;
-  grid-row-start: 2;
-  grid-row-end: 2;
-  width: 70%;
-  height: 30px;
-  float: right;
-  border-radius: 20px;
-}
 
 .Book_name {
   position: relative;
@@ -322,57 +286,13 @@ header {
   cursor: pointer;
 }
 
-/* BUY */
-.Name {
-  position: relative;
-  left: 25%;
-  text-decoration: underline;
-}
 
-.selling {
-  border-radius: 5%;
-  position: relative;
-  left: 25%;
-  display: flex;
-  width: 50%;
-  height: 35%;
-  justify-content: space-between;
-  background-image: linear-gradient(#fbc2eb, #a6c1ee)
-}
 
-.txt {
-  margin: 10px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 50%;
-  border: #000 1px solid;
-}
 
-.resume {
-  color: rgb(121, 37, 18);
-  height: auto;
-  width: auto;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
 
-.btnachter {
-  cursor: pointer;
-  border-radius: 30px;
-  border-top: none;
-  color: #005AA7;
-}
-
-.imagedulivre {
-  width: 50%;
-  padding: 3px;
-  margin: 1em;
-  border: #000 1px solid;
-  background-color: white;
-}
-
+/* ######################################################## */
+/* ######################### DONE ######################### */
+/* ######################################################## */
 
 /* SELL*/
 .SellProduct {
@@ -383,6 +303,17 @@ header {
   flex-direction: column;
   width: 500px;
   border: 2px black solid;
+}
+
+.sell-description {
+  height:200px;
+  resize: vertical;
+  box-sizing: border-box;
+  border: 1px solid rgb(0, 0, 0);
+  width: 100%;
+  padding: 10px;
+  margin-top: 5px;
+  margin-bottom: 10px;
 }
 
 
@@ -410,7 +341,7 @@ header {
 
 .book_name {
   margin-left: auto;
-  margin-right: auto;
+  margin-right: 200px;
 }
 
 .btn-success {
@@ -448,6 +379,104 @@ header {
   background-image: linear-gradient(#005AA7, #FFFDE4);
 }
 
+/* REGISTER AND LOGIN */
+.box {
+  width: 400px;
+  margin: 0 auto;
+}
+
+.error {
+  text-align: center;
+}
+
+/* BUY */
+
+.card {
+  margin: auto;
+  box-sizing: border-box;
+  overflow: hidden;
+  background-image: linear-gradient(#fbc2eb, #a6c1ee);
+  padding: 20px;
+  width: 80%;
+  height: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  justify-content: space-between;
+  border-radius: 20px;
+}
+
+.article-image {
+  box-sizing: border-box;
+  float: left;
+  width: 30%;
+  height: 100%;
+}
+
+.article-infos {
+  margin-top: auto;
+  overflow: hidden;
+  box-sizing: border-box;
+  width: 65%;
+  float: right;
+  padding: 10px;    
+  height: 100%;
+  display: inline;  
+}
+
+.book-image {
+  margin: auto;
+  height: 80%; 
+  width: 100%; 
+  object-fit: contain;
+  border: #000 3px solid;
+  border-radius: 5px;
+  background-color: white;
+}
+
+.article-infos .book-title {
+  margin: auto;
+  box-sizing: border-box;
+  height: 100%;
+  width: 65%;
+}
+
+.article-infos .article-info {
+  margin: auto;
+  margin-top: 15%;
+  box-sizing: border-box;
+  height: 100%;
+  width: 65%;
+  align-items: center;
+  justify-content: center;
+}
+
+.article-infos .article-price {
+  margin: auto;
+  margin-top: 20%;
+  box-sizing: border-box;
+  height: 100%;
+  width: 65%;
+}
+
+.book-price, .book-state {
+  margin: auto;
+  float: left;
+}
+
+.book-stars {
+  margin: auto;
+  float: right;
+}
+
+.buy-button {
+  border: black 2px solid;
+  border-radius: 30px;
+  background-image: linear-gradient(yellow, orange);
+  cursor: pointer;
+  float: right;
+  margin: auto;
+}
+
 /* BASKET */
 
 .line {
@@ -483,4 +512,176 @@ header {
   grid-row-end: 2;
 }
 
+.basket-container {
+  margin: auto;
+  box-sizing: border-box;
+  overflow: hidden;
+  background-image: linear-gradient(#fbc2eb, #a6c1ee);
+  padding: 20px;
+  width: 80%;
+  height: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  justify-content: space-between;
+  border-radius: 20px;
+}
+
+.articles {
+  box-sizing: border-box;
+  float: left;
+  width: 70%;
+  height: 100%;
+}
+
+.summary {
+  margin-top: auto;
+  overflow: hidden;
+  box-sizing: border-box;
+  width: 30%;
+  float: right;
+  padding: 10px;    
+  height: 100%;
+  display: inline;  
+}
+
+/* INDEX */
+
+.articles-container {
+  margin-right: 15%;
+  margin-left: 15%;
+  table-layout: fixed;
+  border: 1px solid;
+  border-radius: 30px;
+  font-size: larger;
+  flex-direction: column;
+  align-items: center;
+  background-image: linear-gradient(#005AA7, #caf1f4);
+}
+
+.art-image {
+  margin-left: 25px;
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  border-radius: 5px;
+  position: relative;
+  padding: 5px;
+}
+
+.image-cell {
+  width: calc(100%/4);
+}
+
+.title-cell {
+  width: calc(1.5* 100%/3);
+}
+
+.art-elem {
+  width: calc(25%/2);
+}
+
+.art-title {
+  margin: auto;
+  box-sizing: border-box;
+  height: 100%;
+  width: 65%;
+  padding: 20px;
+}
+
+.art-price {
+  height: 100%;
+  width: 65%;
+  box-sizing: border-box;
+  margin: auto;
+  text-align: center;
+}
+
+.art-btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: auto;
+}
+
+.art-buy {
+  margin: auto;
+  width: 40%;
+  height: 80px;
+  cursor: pointer;
+  border: black 1px solid;
+  border-radius: 20px;
+}
+
+.image-container {
+  width: 35%;
+  height: auto;
+}
+
+.main {
+  margin-left: 3%;
+  margin-right: 3%;
+}
+
+.sell-link {
+  float: left;
+}
+
+.search, .order{
+  float: right;
+  background-color: rgb(255, 255, 255, 0.1s);
+  height: 30px;
+  border-radius: 30px;
+  justify-content: center;
+  position: relative;
+}
+
+/* ############### */
 /* TESTING PURPOSE */
+/* ############### */
+
+.vertical-article-container {
+  margin-right: 15%;
+  margin-left: 15%;
+  table-layout: fixed;
+  border: 1px solid;
+  border-radius: 30px;
+  font-size: larger;
+  flex-direction: column;
+  align-items: center;
+  background-image: linear-gradient(#005AA7, #caf1f4);
+  background-color: #333;
+  overflow: auto;
+  white-space: nowrap
+}
+
+.vertical-card {
+  margin: auto;
+  box-sizing: border-box;
+  overflow: hidden;
+  background-image: linear-gradient(#fbc2eb, #a6c1ee);
+  padding: 20px;
+  width: 80%;
+  height: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  justify-content: space-between;
+  border-radius: 20px;
+}
+
+.vertical-art-image {
+  margin-left: 25px;
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  border-radius: 5px;
+  position: relative;
+  padding: 5px;
+}
+
+.vertical-title {
+  float: left;
+}
+
+.vertical-price {
+  float: right;
+}
