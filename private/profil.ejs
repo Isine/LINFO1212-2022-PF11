@@ -14,7 +14,7 @@
 
         <h1 class="title"><a href="/" id="title_link">SyllaExchange</a></h1>
 
-        <input type="button" value=Basket id="basket" onclick="location.href='/basket';">
+        <input type="button" value=🛒 id="basketLogo" onclick="location.href='/basket';">
 
     </header>
 </head>
@@ -26,25 +26,25 @@
         <div class="login_signup_form">
             <h2 class="text"><strong>My Account</strong></h2>
 
-            <form action="/profil" method="post">
+            <form action="/profil" method="post" class="line">
                 <label for="new_username">New Username: </label>
                 <input type="text" id="new_username" name="new_username" placeholder=<%=user %> required/>
                 <button class="btn-success" type="submit" name="modify" value="username">Modify</button>
             </form>
 
-            <form action="/profil" method="post">
+            <form action="/profil" method="post" class="line">
                 <label for="new_email">New Email: </label>
                 <input type="email" id="new_email" name="new_email" placeholder=<%=email %> required/>
                 <button class="btn-success" type="submit" name="modify" value="email">Modify</button>
             </form>
 
-            <form action="/profil" method="post">
+            <form action="/profil" method="post" class="line">
                 <label for="new_password">New Password: </label>
                 <input type="password" id="new_password" name="new_password" placeholder="New Password" required />
                 <button class="btn-success" type="submit" name="modify" value="password">Modify</button>
             </form>
 
-            <form action="/profil" method="post">
+            <form action="/profil" method="post" class="line">
                 <label for="new_money">New Money: </label>
                 <input type="number" min="0" id="new_money" name="new_money" placeholder=<%=money %> required/>
                 <button class="btn-success" type="submit" name="modify" value="money">Modify</button>
@@ -58,7 +58,7 @@
                 <div>
                     <h2 class="text"><strong>Settings</strong></h2>
 
-                    <form action="/profil" method="post">
+                    <form action="/profil" method="post" class="line">
                         <label for="night_mode">Night mode: </label>
 
                         <% if(nightMode) { %>
@@ -70,8 +70,8 @@
                                     <button class="btn-success" type="submit" name="modify"
                                         value="nightMode">Modify</button>
                     </form>
-
-                    <form action="/profil" method="post">
+                    <br>
+                    <form action="/profil" method="post" class="line">
                         <label for="privateEmail">Only show pseudo (otherwise email): </label>
 
                         <% if(privateEmail) { %>
@@ -83,8 +83,8 @@
                                     <button class="btn-success" type="submit" name="modify"
                                         value="privateEmail">Modify</button>
                     </form>
-
-                    <form action="/profil" method="post">
+                    <br>
+                    <form action="/profil" method="post" class="line">
                         <label for="horizontalView">Horizontal view </label>
 
                         <% if(horizontalView) { %>

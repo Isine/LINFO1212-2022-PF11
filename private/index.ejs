@@ -14,7 +14,7 @@
 
     <h1 class="title"><a href="/" id="title_link">SyllaExchange</a></h1>
 
-    <input type="button" value=Basket id="basket" onclick="location.href='/basket';">
+    <input type="button" value=🛒 id="basketLogo" onclick="location.href='/basket';">
     <input type="button" value=<%=user %> id="connexion" onclick="location.href='/login';">
 
   </header>
@@ -22,18 +22,16 @@
 
 <body>
   <hr>
+  <div id="indexLayout">
 
-  <a href="/sell">Sell a syllabus</a>
+    <a id="sellLink" href="/sell">Sell a syllabus</a>
 
-  <div class="search">
-    <form action="/" method="get">
+
+    <form action="/" method="get" class="search">
       <input id="input_search" type="text" placeholder="Recherche" name="looking_for" required>
       <button id="button_search" type="submit" name="btn_search" value="searching">🔎</button>
     </form>
-  </div>
 
-  <% if(viewPref) { %>
-    <!-- horizontal view -->
 
     <select class="order" name="order" id="sortMode" onchange="location.href='/?tri='+this.value">
       <option value="" selected="selected" hidden="hidden">Order By</option>
@@ -42,52 +40,20 @@
       <option value="date">Date</option>
     </select>
 
-    <div class="catalogueH">
-      <img class="arrow" src="/private/images/FlêcheG.png" alt="">
-
-      <% articleList.forEach(function(article){ %>
-        <div class="itemsH">
-          <p class="Book_name">
-            <%= article.title %>
-          </p>
-          <img src=<%=article.image %> alt="Syllabus-image" class="booksH">
-          <div class="info">
-            <h2>
-              <%= article.price %> €
-            </h2>
-            <h2>
-              <%= article.desc %>
-            </h2>
-            <h2> vendu par <%= article.seller %>
-            </h2>
-          </div>
-          <button class="acheterH" onclick="location.href='/buy?artID=<%= article.id %>';">
-            Acheter
-          </button>
-        </div>
-        <% }) %>
-    </div>
+    <% if(viewPref) { %>
+      <!-- horizontal view -->
 
 
-    <% } else { %>
-      <!-- vertical view -->
 
-      <select class="order" name="order" id="sortMode" onchange="location.href='/?tri='+this.value">
-        <option value="" selected="selected" hidden="hidden">Order By</option>
-        <option value="name">Name</option>
-        <option value="price">Price</option>
-        <option value="date">Date</option>
-      </select>
-
-      <div class="catalogueV">
+      <div class="catalogueH">
         <img class="arrow" src="/private/images/FlêcheG.png" alt="">
 
         <% articleList.forEach(function(article){ %>
-          <div class="itemsV">
+          <div class="itemsH">
             <p class="Book_name">
               <%= article.title %>
             </p>
-            <img src=<%=article.image %> alt="Syllabus-image" class="booksV">
+            <img src=<%=article.image %> alt="Syllabus-image" class="booksH">
             <div class="info">
               <h2>
                 <%= article.price %> €
@@ -98,7 +64,7 @@
               <h2> vendu par <%= article.seller %>
               </h2>
             </div>
-            <button class="acheterV" onclick="location.href='/buy?artID=<%= article.id %>';">
+            <button class="acheterH" onclick="location.href='/buy?artID=<%= article.id %>';">
               Acheter
             </button>
           </div>
@@ -106,8 +72,37 @@
       </div>
 
 
-      <% } %>
+      <% } else { %>
+        <!-- vertical view -->
+        <div class="catalogueV">
+          <img class="arrow" src="/private/images/FlêcheG.png" alt="">
 
+          <% articleList.forEach(function(article){ %>
+            <div class="itemsV">
+              <p class="Book_name">
+                <%= article.title %>
+              </p>
+              <img src=<%=article.image %> alt="Syllabus-image" class="booksV">
+              <div class="info">
+                <h2>
+                  <%= article.price %> €
+                </h2>
+                <h2>
+                  <%= article.desc %>
+                </h2>
+                <h2> vendu par <%= article.seller %>
+                </h2>
+              </div>
+              <button class="acheterV" onclick="location.href='/buy?artID=<%= article.id %>';">
+                Acheter
+              </button>
+            </div>
+            <% }) %>
+        </div>
+
+
+        <% } %>
+  </div>
 </body>
 
 </html>

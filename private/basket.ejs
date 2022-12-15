@@ -21,31 +21,58 @@
 
 <body>
   <hr>
+  <div id="basketPageLayout">
+    <div class="catalogueV" id="basketItem">
+      <img class="arrow" src="/private/images/FlêcheG.png" alt="">
 
-  <div class="catalogueV">
-    <img class="arrow" src="/private/images/FlêcheG.png" alt="">
+      <% articleList.forEach(function(article){ %>
+        <form action="/removeFromBasket" method="post">
+          <input type="hidden" name="artID" value=<%=article.id %>>
+          <div class="itemsV">
+            <p class="Book_name">
+              <%= article.title %>
+            </p>
+            <img src=<%=article.image %> alt="Syllabus-image" class="booksV">
+            <div class="info">
+              <h2>
+                <%= article.price %> €
+              </h2>
+              <h2>
+                <%= article.desc %>
+              </h2>
+              <h2> vendu par <%= article.seller %>
+              </h2>
 
-    <% articleList.forEach(function(article){ %>
-      <div class="itemsV">
-        <p class="Book_name">
-          <%= article.title %>
-        </p>
-        <img src=<%=article.image %> alt="Syllabus-image" class="booksV">
-        <div class="info">
-          <h2>
-            <%= article.price %> €
-          </h2>
-          <h2>
-            <%= article.desc %>
-          </h2>
-          <h2> vendu par <%= article.seller %>
-          </h2>
-        </div>
-      </div>
-      <% }) %>
+              <button type="submit" value="searching">🗑</button>
+
+            </div>
+        </form>
+    </div>
+    <% }) %>
   </div>
 
+  <div id="summary">
+    <form action="/acheter" method="post">
+      <div class="line">
+        <label for="">Credit: </label>
+        <input type="text" name="money" value="<%= money %>" readonly />
+      </div>
+      <div class="line">
+        <label>Prix total: </label>
+        <input type="text" name="price" value="<%= totalPrice %>" readonly />
+      </div>
+      <div class="line">
+        <label>
+          <%=message%>
+        </label>
+      </div>
+      <br>
+      <br>
+      <button type="submit" class="btn btn-success" name="btn" value="register">Acheter</button>
+    </form>
+  </div>
 
+  </div>
 </body>
 
 </html>

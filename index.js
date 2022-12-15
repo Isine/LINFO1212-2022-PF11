@@ -155,12 +155,23 @@ app.get('/buy', async function (req, res, next) {
 
 app.get('/basket', async function (req, res, next) {
     let name = "Connexion"
-    if (req.session.userID) name = await DBop.GetUsernameByID(req.session.userID);
-
+    let money = "Please connect first"
+    const error = req.query.error
+    let message = ""
+    if (error !== undefined) message = "Not enough money"
+    if (req.session.userID) {
+        name = await DBop.GetUsernameByID(req.session.userID);
+        money = await DBop.GetMoneyByID(req.session.userID);
+    }
     if (req.session.basketList == undefined) req.session.basketList = []
 
+    let totalPrice = 0
 
-    res.render('basket.ejs', { user: name, articleList: req.session.basketList });
+    req.session.basketList.forEach(element => {
+        totalPrice += element.price
+    });
+
+    res.render('basket.ejs', { user: name, articleList: req.session.basketList, totalPrice: totalPrice, money: money, message: message });
 });
 
 // APP POST
@@ -298,6 +309,7 @@ app.post('/sell', upload.single('image'), async function (req, res) {
 app.post('/buy', async function (req, res) {
     const artID = req.body.id
     artInfo = await DBop.GetArticleInfoByID(artID)
+    artInfo["id"] = artID
 
     if (req.session.basketList == undefined) req.session.basketList = []
 
@@ -313,6 +325,54 @@ app.post('/buy', async function (req, res) {
     return res.redirect("/")
 });
 
+
+app.post('/removeFromBasket', async function (req, res) {
+    const artID = req.body.artID
+    artInfo = await DBop.GetArticleInfoByID(artID)
+
+    let itemIndex
+    req.session.basketList.forEach((element, index, arr) => {
+        if (element.id == artID) {
+            itemIndex = index
+            return
+        }
+    });
+
+    if (itemIndex != undefined) req.session.basketList.splice(itemIndex, 1)
+
+    res.redirect("/basket")
+});
+
+
+app.post('/acheter', async function (req, res) {
+    if (!req.session.userID) {
+        req.session.from = "basket"
+        return res.redirect('/login');
+    }
+
+    if (parseFloat(req.body.money) < parseFloat(req.body.price)) return res.redirect("/basket?error=1")
+
+    req.session.basketList.forEach(async element => {
+        const price = element.price
+
+        await DBop.GetMoneyByID(req.session.userID).then(async amount => { // First withdraw money from buyer
+            const newBuyerMoney = bank.withdraw(amount, price);
+            await DBop.SetNewMoney(req.session.userID, newBuyerMoney)
+        })
+
+        await DBop.GetMoneyByID(element.sellerID).then(async amount => { // Then deposit money on seller account
+            const newSellerMoney = bank.deposit(amount, price)
+            await DBop.SetNewMoney(element.sellerID, newSellerMoney)
+        })
+
+        DBop.SetArticleSelled(element.id, true)
+        DBop.SetArticleBuyer(element.id, req.session.userID)
+    });
+
+    req.session.basketList = []
+
+    res.redirect("/")
+});
 // OTHER
 
 app.use(express.static('private'));
