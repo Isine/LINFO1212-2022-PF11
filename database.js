@@ -409,8 +409,18 @@ const DBOperations = {
     },
 
     GetBoughtArticleOf: async function (userID) {
-        const articles = await sequelize.query("SELECT id FROM articles WHERE buyer = ?", { replacements: [userID], type: QueryTypes.SELECT });
-        return articles;
+        const articles = await Article.findAll({ where: { buyer: userID } });
+
+        let allInfos = [];
+        for (let article of articles) {
+            artInfo = article.dataValues;
+
+            let seller = await this.GetSellerByArtID(article.id);
+            let info = { id: artInfo.id, title: artInfo.title, desc: artInfo.description, price: artInfo.price, image: artInfo.image.replace("private", ""), rate: artInfo.rate, selled: artInfo.selled, seller: seller };
+            allInfos.push(info);
+        }
+
+        return allInfos;
     },
 
     /* USE FOR TEST ONLY */

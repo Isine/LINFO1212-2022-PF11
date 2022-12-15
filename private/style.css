@@ -215,7 +215,6 @@ header {
   position: relative;
   text-decoration: underline;
   text-transform: uppercase;
-
 }
 
 .info {
@@ -241,6 +240,7 @@ header {
   justify-content: space-between;
   flex-direction: column;
 }
+
 .itemsV {
   width: 30vw;
   height: 15vh;
@@ -346,7 +346,7 @@ header {
   flex-direction: column;
   align-items: center;
   width: 50%;
-  border: #000  1px solid;
+  border: #000 1px solid;
 }
 
 .resume {
@@ -371,7 +371,6 @@ header {
   margin: 1em;
   border: #000 1px solid;
   background-color: white;
-  
 }
 
 
@@ -388,22 +387,30 @@ header {
 
 
 /* PROFIL*/
-.login_signup_form {
-  font-size: larger;
-  position: relative;
-  left: 25%;
-  width: 50vw;
-  height: 70vh;
-  background-image: linear-gradient(#005AA7, #FFFDE4);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: space-around;
-  border-radius: 30px;
+
+.wrapper {
+  margin-left: auto; 
+  margin-right: auto;
 }
 
-.text {
-  text-decoration: underline;
+.book-img {
+  width: 20%;
+  height: 50%;
+  border-radius: 6px;
+  margin-right: 12px;
+  flex-shrink: 0;
+  margin-left: 5px;
+}
+
+.case {
+  outline: thin solid;
+  border-radius: 20px;
+  vertical-align: middle;
+}
+
+.book_name {
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .btn-success {
@@ -414,6 +421,20 @@ header {
   float: right;
   width: 80px;
   height: 30px;
+}
+
+.container {
+  margin-left: 20%;
+  margin-right: 20%;
+  border: 1px solid;
+  border-radius: 30px;
+
+  justify-content: space-around;
+  position: relative;
+  font-size: larger;
+  flex-direction: column;
+  align-items: center;
+  background-image: linear-gradient(#005AA7, #FFFDE4);
 }
 
 /* BASKET */
@@ -450,3 +471,5 @@ header {
   grid-row-start: 1;
   grid-row-end: 2;
 }
+
+/* TESTING PURPOSE */

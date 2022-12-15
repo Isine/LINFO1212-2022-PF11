@@ -107,7 +107,9 @@ app.get('/profil', async function (req, res, next) {
         let privateEmail = await DBop.GetPrivateEmailByID(req.session.userID);
         let horizontalView = await DBop.GetHorizontalViewByID(req.session.userID);
 
-        res.render('profil.ejs', { user: name, money: money, email: email, nightMode: nightMode, privateEmail: privateEmail, horizontalView: horizontalView });
+        let purchases =  await DBop.GetBoughtArticleOf(req.session.userID);
+
+        res.render('profil.ejs', { user: name, money: money, email: email, nightMode: nightMode, privateEmail: privateEmail, horizontalView: horizontalView, purchases: purchases });
     }
 });
 
