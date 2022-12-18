@@ -21,8 +21,7 @@
     "jest": "^29.3.1",
     "multer": "^1.4.5-lts.1",
     "sequelize": "^6.25.8",
-    "sqlite3": "^5.1.2",
-    "supertest": "^6.3.3"
+    "sqlite3": "^5.1.2"
   },
   "devDependencies": {
     "@babel/preset-env": "^7.20.2"

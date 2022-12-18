@@ -12,6 +12,7 @@
 - sqlite3
 - multer
 - crypto
+- jest (Pour les tests)
 
 ## Installation :
 Commencez par installer NodeJS, pour cela suivez le guide sur le site officiel du logiciel (https://nodejs.org/). Vous pouvez verifier que NodeJS est bien installé en executant la commande suivante: "node -v" & "npm -v" et vous assurez que vous êtes sur la dernière version du programme. 
@@ -21,7 +22,10 @@ Maintenant, créez un dossier qui contindera tout les fichiers sur site. Ouvrez 
 Lorsque l'installation est terminer, il vous suffit d'executer la commande: "node index.js" et de vous rendre sur la page "https://localhost:8080/". Notez que votre navigateur peut vous indiquer que le site n'est pas sécurisé car le certificat n’a pas été créé par une autorité reconnue. Il ne vous reste plus qu'a profiter du site.
 
 ## Fichiers du site :
-- Dossier "private" contient les pages 'ejs', le fichier 'css' et les images utiles au site.
+- Dossier "private" contient les pages 'ejs', le fichier 'css', le dossier "images" ainsi que des scripts utiles au site.
+- Dossier "Images" dans le dossier "private" contient toutes les images du site.
+- Dossier "articles" dans le dossier "images" contient les images des articles du site
+- Dossier "test" contient les tests pour les différentes fonctions utilisés par le site (A lancer avec jest)
 - Fichier "cert.pem" sert au lancement https du site
 - Fichier "key.pem" sert au lancement https du site
 - Fichier "database.js" permet d'intéragir avec la base de donnée
