@@ -168,9 +168,8 @@ app.get('/buy', async function (req, res, next) {
         if (available) {
             await DBop.GetArticleInfoByID(artId).then(async artInfo => {
                 if (artInfo.selled === 0) {
-                    sellerID = artInfo.sellerID
-                    await DBop.GetUsernameByID(sellerID).then(sellerName => {
-                        res.render('buy.ejs', { user: name, title: artInfo["title"], image: artInfo["image"], desc: artInfo["desc"], seller: sellerName, sellerid: sellerID, rate: artInfo["rate"], price: artInfo["price"], id: artId, mode: mode });
+                    await DBop.GetSellerByArtID(artId).then(sellerName => {
+                        res.render('buy.ejs', { user: name, title: artInfo["title"], image: artInfo["image"], desc: artInfo["desc"], seller: sellerName, sellerid: artInfo["sellerID    "], rate: artInfo["rate"], price: artInfo["price"], id: artId, mode: mode });
                     });
                 } else {
                     res.redirect('/');
