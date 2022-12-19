@@ -17,6 +17,35 @@
     <input type="button" value=<%=user %> id="connexion" onclick="location.href='/login';">
 
   </header>
+
+  <script>
+    var cssFile = document.querySelector(':root');
+    const dark = <%=mode %>
+      let variables = {
+        "--main-star": "orange",
+        "--second-star": "yellow",
+        "--dark": "#292929",
+        "--light": "whitesmoke",
+        "--dark-blue": "#005AA7",
+        "--light-blue": "#caf1f4",
+        "--body-color": "#00000000",
+      }
+    if (dark) {
+      variables = {
+        "--main-button": "#006363",
+        "--second-button": "cadetblue",
+        "--dark": "#ffffff",
+        "--light": "#000000",
+        "--dark-blue": "#caf1f4",
+        "--light-blue": "#005AA7",
+        "--body-color": "#1d252b",
+      }
+    }
+
+    for (const [key, value] of Object.entries(variables)) {
+      cssFile.style.setProperty(key, value);
+    }
+  </script>
 </head>
 
 <body>
@@ -31,22 +60,32 @@
               <img class="book-img" src=<%=article.image %> alt="article image">
             </td>
             <td>
-              <strong><u><h2 class="book_name"><%=article.title %></h2></u></strong>
+              <strong><u>
+                  <h2 class="book_name">
+                    <%=article.title %>
+                  </h2>
+                </u></strong>
             </td>
             <td>
               <div class="info">
-                <h2><%=article.price %>€</h2>
-                <h4><%=article.desc %></h4>
-                <h4>Selled by:<br> <%= article.seller %></h4>
+                <h2>
+                  <%=article.price %>€
+                </h2>
+                <h4>
+                  <%=article.desc %>
+                </h4>
+                <h4>Selled by:<br>
+                  <%= article.seller %>
+                </h4>
                 <form action="/removeFromBasket" method="post">
-                  <input type="hidden" name="artID" value=<%= article.id %>>
+                  <input type="hidden" name="artID" value=<%=article.id %>>
                   <button type="submit" value="searching">🗑</button>
                 </form>
-              
+
               </div>
             </td>
           </tr>
-        <% }) %>
+          <% }) %>
       </table>
     </div>
     <div class="summary">
@@ -64,18 +103,20 @@
             <% if(!isNaN(money)) {%>
               <% if(money - totalPrice < 0) {%>
                 <label>Not enough money</label>
-              <% } else { %>
-                <label>Remaining money: <%= money - totalPrice %>€</label>
-                <button type="submit" class="btn btn-success" name="btn" value="register">Acheter</button>
-              <% } %>
-            <% } %>
+                <% } else { %>
+                  <label>Remaining money: <%= money - totalPrice %>€</label>
+                  <button type="submit" class="btn btn-success" name="btn" value="register">Acheter</button>
+                  <% } %>
+                    <% } %>
           </div>
           <div class="line">
-            <label> <%=message%> </label>
+            <label>
+              <%=message%>
+            </label>
           </div>
           <br>
           <br>
-          
+
         </form>
       </div>
     </div>
@@ -138,4 +179,5 @@
 </body>
 
 -->
+
 </html>

@@ -1,3 +1,14 @@
+:root {
+  --main-button: #006363;
+  --second-button: cadetblue;
+  --dark: whitesmoke;
+  --light: #292929;
+  --dark-blue: #caf1f4;
+  --light-blue: #0a4f8b;
+  --body-color: #1d252b;
+}
+
+
 body {
   font-family: 'Titillium Web', sans-serif;
   background: url(/images/background.png) no-repeat center center fixed;
@@ -5,6 +16,8 @@ body {
   -moz-background-size: cover;
   -o-background-size: cover;
   background-size: cover;
+  background-color: var(--body-color);
+  background-blend-mode: multiply;
 }
 
 /* HEADER */
@@ -13,8 +26,16 @@ header {
   grid-template-columns: 4fr 1fr 16fr 1fr 4fr;
   grid-template-rows: 1fr;
   backdrop-filter: blur(30px);
-  background-color: rgba(182, 182, 182, 0.2);
+  background-color: #b6b6b633;
   margin: unset;
+}
+
+button,
+input[type=button] {
+  border-radius: 10px;
+  border-color: transparent;
+  background-color: var(--dark);
+  color: var(--light)
 }
 
 .logo {
@@ -32,7 +53,7 @@ header {
 
 #title_link {
   text-decoration: none;
-  color: black;
+  color: var(--dark);
 }
 
 #basketLogo {
@@ -41,12 +62,11 @@ header {
   grid-row-start: 1;
   grid-row-end: 1;
   height: 50%;
-  min-height: 45px;
   min-width: 5px;
   width: 90%;
   margin-top: 20px;
 
-  font-size: xx-large;
+  font-size: large;
 }
 
 #connexion {
@@ -57,9 +77,16 @@ header {
   height: 50%;
   min-height: 5px;
   min-width: 5px;
-  width: 100%;
+  width: 90%;
   margin-top: 20px;
   float: right;
+}
+
+.search {
+  float: right;
+  display: grid;
+  grid-template-columns: 7fr 1fr;
+  grid-template-rows: 1fr;
 }
 
 #input_search {
@@ -67,8 +94,11 @@ header {
   grid-column-end: 1;
   grid-row-start: 1;
   grid-row-end: 1;
-  border-top-left-radius: 20px;
-  border-bottom-left-radius: 20px;
+  border-top-left-radius: 10px;
+  border-bottom-left-radius: 10px;
+  border-color: transparent;
+  background-color: var(--dark);
+  color: var(--light);
 }
 
 #button_search {
@@ -76,16 +106,18 @@ header {
   grid-column-end: 2;
   grid-row-start: 1;
   grid-row-end: 1;
-  border: none;
-  border-top-right-radius: 20px;
-  border-bottom-right-radius: 20px;
+  border-top-right-radius: 10px;
+  border-bottom-right-radius: 10px;
+  border-top-left-radius: 0px;
+  border-bottom-left-radius: 0px;
   cursor: pointer;
-  background-color: rgb(74, 68, 68);
-  text-shadow: 1px 1px 1px #000;
+  background-color: #4a4444;
+  text-shadow: 1px 1px 1px var(--dark);
+  height: 30px;
 }
 
 #button_search:hover {
-  background-color: rgb(53, 49, 49);
+  background-color: #353131;
 }
 
 /* SELL STAR */
@@ -121,7 +153,7 @@ header {
 
 /* give label a hover state */
 .star-rating label:hover {
-  color: #ff69b4;
+  color: pink;
   transition: 0.2s ease;
 }
 
@@ -157,14 +189,14 @@ header {
   display: flex;
   flex-direction: column;
   width: 500px;
-  border: 2px black solid;
+  border: 2px var(--dark) solid;
 }
 
 .sell-description {
-  height:200px;
+  height: 200px;
   resize: vertical;
   box-sizing: border-box;
-  border: 1px solid rgb(0, 0, 0);
+  border: 1px solid var(--dark);
   width: 100%;
   padding: 10px;
   margin-top: 5px;
@@ -175,7 +207,7 @@ header {
 /* PROFIL*/
 
 .wrapper {
-  margin-left: auto; 
+  margin-left: auto;
   margin-right: auto;
 }
 
@@ -200,9 +232,9 @@ header {
 }
 
 .btn-success {
-  border: red 1px solid;
+  border: var(--main-button) 1px solid;
   border-radius: 30px;
-  background-image: linear-gradient(yellow, orange);
+  background-image: linear-gradient(var(--second-button), var(--main-button));
   cursor: pointer;
   float: right;
   width: 80px;
@@ -210,10 +242,10 @@ header {
 }
 
 .btn-logout {
-  border: rgb(95, 4, 4) 1.5px solid;
+  border: 0px solid;
   border-radius: 30px;
-  background-image: linear-gradient(rgb(59, 59, 54), rgb(8, 8, 8));
-  color: rgb(223, 215, 213);
+  background-image: linear-gradient(#8a8a81, black);
+  color: whitesmoke;
   cursor: pointer;
   float: right;
   width: 80px;
@@ -231,12 +263,13 @@ header {
   font-size: larger;
   flex-direction: column;
   align-items: center;
-  background-image: linear-gradient(#005AA7, #FFFDE4);
+  background-image: linear-gradient(var(--light-blue), var(--light));
+  color: var(--dark);
 }
 
 /* REGISTER AND LOGIN */
 .box {
-  width: 400px;
+  width: 30%;
   margin: 0 auto;
 }
 
@@ -273,19 +306,19 @@ header {
   box-sizing: border-box;
   width: 65%;
   float: right;
-  padding: 10px;    
+  padding: 10px;
   height: 100%;
-  display: inline;  
+  display: inline;
 }
 
 .book-image {
   margin: auto;
-  height: 80%; 
-  width: 100%; 
+  height: 80%;
+  width: 100%;
   object-fit: contain;
-  border: #000 3px solid;
+  border: var(--dark) 3px solid;
   border-radius: 5px;
-  background-color: white;
+  background-color: var(--light);
 }
 
 .article-infos .book-title {
@@ -313,7 +346,8 @@ header {
   width: 65%;
 }
 
-.book-price, .book-state {
+.book-price,
+.book-state {
   margin: auto;
   float: left;
 }
@@ -324,8 +358,8 @@ header {
 }
 
 .buy-button {
-  border: black 2px solid;
-  border-radius: 30px;
+  border: orange 2px solid;
+  /* border-radius: 30px; */
   background-image: linear-gradient(yellow, orange);
   cursor: pointer;
   float: right;
@@ -347,7 +381,7 @@ header {
 #summary {
   font-size: larger;
   height: 20vh;
-  background-image: linear-gradient(#005AA7, #FFFDE4);
+  background-image: linear-gradient(var(--dark-blue), var(--light-blue));
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -394,9 +428,9 @@ header {
   box-sizing: border-box;
   width: 30%;
   float: right;
-  padding: 10px;    
+  padding: 10px;
   height: 100%;
-  display: inline;  
+  display: inline;
 }
 
 /* INDEX */
@@ -410,7 +444,7 @@ header {
   font-size: larger;
   flex-direction: column;
   align-items: center;
-  background-image: linear-gradient(#005AA7, #caf1f4);
+  background-image: linear-gradient(var(--dark-blue), var(--light-blue));
 }
 
 .art-image {
@@ -463,8 +497,6 @@ header {
   width: 40%;
   height: 80px;
   cursor: pointer;
-  border: black 1px solid;
-  border-radius: 20px;
 }
 
 .image-container {
@@ -481,11 +513,12 @@ header {
   float: left;
 }
 
-.search, .order{
+.order {
   float: right;
-  background-color: rgb(255, 255, 255, 0.1s);
+  background-color: var(--dark);
+  color: var(--light);
   height: 30px;
-  border-radius: 30px;
+  border-radius: 10px;
   justify-content: center;
   position: relative;
 }
@@ -501,30 +534,35 @@ header {
 }
 
 .vertical-articles-container {
-  display: flex; 
-  flex-direction: row; 
+  display: flex;
+  flex-direction: row;
   justify-content: space-between;
-  background-image: linear-gradient(#005AA7, #caf1f4);
+  background-image: linear-gradient(var(--dark-blue), var(--light-blue));
   overflow: auto;
   white-space: nowrap;
   border-radius: 30px;
+  padding: 20px
 }
 
+
 .book {
-  width: auto; 
-  padding: 20px; 
-  border: 1px solid #c9c9c9;
+  width: auto;
+  padding: 20px;
+  border-radius: 15px;
+  border-image: linear-gradient(var(--light-blue), var(--dark-blue)) 4;
+  border-style: solid;
+  border-width: 4px;
 }
 
 .book img {
   width: 130px;
   height: 200px;
-  border: 2px solid black;
+  border: 2px solid var(--dark);
   padding: 2px;
-  background-color: white;
+  background-color: var(--light);
 }
 
-.book button{
+.book button {
   position: relative;
   top: 15px;
   border-radius: 30px;

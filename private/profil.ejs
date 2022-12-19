@@ -16,6 +16,35 @@
 
         <input type="button" value=🛒 id="basketLogo" onclick="location.href='/basket';">
     </header>
+
+    <script>
+        var cssFile = document.querySelector(':root');
+        const dark = <%=mode %>
+            let variables = {
+                "--main-star": "orange",
+                "--second-star": "yellow",
+                "--dark": "#292929",
+                "--light": "whitesmoke",
+                "--dark-blue": "#005AA7",
+                "--light-blue": "#caf1f4",
+                "--body-color": "#00000000",
+            }
+        if (dark) {
+            variables = {
+                "--main-button": "#006363",
+                "--second-button": "cadetblue",
+                "--dark": "#ffffff",
+                "--light": "#000000",
+                "--dark-blue": "#caf1f4",
+                "--light-blue": "#005AA7",
+                "--body-color": "#1d252b",
+            }
+        }
+
+        for (const [key, value] of Object.entries(variables)) {
+            cssFile.style.setProperty(key, value);
+        }
+    </script>
 </head>
 
 <body>
@@ -33,7 +62,7 @@
                     <td>
                         <form action="/profil" method="post">
                             <label for="new_username">New Username: </label>
-                            <input type="text" id="new_username" name="new_username" placeholder=<%= user %> required/>
+                            <input type="text" id="new_username" name="new_username" placeholder=<%=user %> required/>
                             <button class="btn-success" type="submit" name="modify" value="username">Modify</button>
                         </form>
                     </td>
@@ -42,7 +71,7 @@
                     <td>
                         <form action="/profil" method="post">
                             <label for="new_email">New Email: </label>
-                            <input type="email" id="new_email" name="new_email" placeholder=<%= email %> required/>
+                            <input type="email" id="new_email" name="new_email" placeholder=<%=email %> required/>
                             <button class="btn-success" type="submit" name="modify" value="email">Modify</button>
                         </form>
                     </td>
@@ -51,7 +80,8 @@
                     <td>
                         <form action="/profil" method="post">
                             <label for="new_password">New Password: </label>
-                            <input type="password" id="new_password" name="new_password" placeholder="New Password" required />
+                            <input type="password" id="new_password" name="new_password" placeholder="New Password"
+                                required />
                             <button class="btn-success" type="submit" name="modify" value="password">Modify</button>
                         </form>
                     </td>
@@ -60,7 +90,8 @@
                     <td>
                         <form action="/profil" method="post">
                             <label for="new_money">New Money: </label>
-                            <input type="number" min="0" id="new_money" name="new_money" placeholder=<%= money %> required/>
+                            <input type="number" min="0" id="new_money" name="new_money" placeholder=<%=money %>
+                            required/>
                             <button class="btn-success" type="submit" name="modify" value="money">Modify</button>
                         </form>
                     </td>
@@ -84,14 +115,15 @@
                     <td>
                         <form action="/profil" method="post">
                             <label for="night_mode">Night mode: </label>
-    
+
                             <% if(nightMode) { %>
                                 <input type="checkbox" id="night_mode" name="night_mode" checked>
-                            <% } else { %>
+                                <% } else { %>
                                     <input type="checkbox" id="night_mode" name="night_mode">
-                            <% } %>
-    
-                            <button class="btn-success" type="submit" name="modify" value="nightMode">Modify</button>
+                                    <% } %>
+
+                                        <button class="btn-success" type="submit" name="modify"
+                                            value="nightMode">Modify</button>
                         </form>
                     </td>
                 </tr>
@@ -99,14 +131,15 @@
                     <td>
                         <form action="/profil" method="post">
                             <label for="privateEmail">Only show pseudo (otherwise email): </label>
-    
+
                             <% if(privateEmail) { %>
                                 <input type="checkbox" id="privateEmail" name="privateEmail" checked>
-                            <% } else { %>
-                                <input type="checkbox" id="privateEmail" name="privateEmail">
-                            <% } %>
-    
-                            <button class="btn-success" type="submit" name="modify" value="privateEmail">Modify</button>
+                                <% } else { %>
+                                    <input type="checkbox" id="privateEmail" name="privateEmail">
+                                    <% } %>
+
+                                        <button class="btn-success" type="submit" name="modify"
+                                            value="privateEmail">Modify</button>
                         </form>
                     </td>
                 </tr>
@@ -114,14 +147,15 @@
                     <td>
                         <form action="/profil" method="post">
                             <label for="horizontalView">Horizontal view </label>
-    
+
                             <% if(horizontalView) { %>
                                 <input type="checkbox" id="viehorizontalVieww" name="horizontalView" checked>
-                            <% } else { %>
-                                <input type="checkbox" id="horizontalView" name="horizontalView">
-                            <% } %>
-    
-                            <button class="btn-success" type="submit" name="modify" value="horizontalView">Modify</button>
+                                <% } else { %>
+                                    <input type="checkbox" id="horizontalView" name="horizontalView">
+                                    <% } %>
+
+                                        <button class="btn-success" type="submit" name="modify"
+                                            value="horizontalView">Modify</button>
                         </form>
                     </td>
                 </tr>
@@ -141,17 +175,27 @@
                                 <img class="book-img" src=<%=article.image %> alt="article image">
                             </td>
                             <td>
-                                <strong><u><h2 class="book_name"><%=article.title %></h2></u></strong>
+                                <strong><u>
+                                        <h2 class="book_name">
+                                            <%=article.title %>
+                                        </h2>
+                                    </u></strong>
                             </td>
                             <td>
                                 <div class="info">
-                                    <h2><%=article.price %>€</h2>
-                                    <h4><%=article.desc %></h4>
-                                    <h4>Selled by:<br> <%=article.seller %></h4>
+                                    <h2>
+                                        <%=article.price %>€
+                                    </h2>
+                                    <h4>
+                                        <%=article.desc %>
+                                    </h4>
+                                    <h4>Selled by:<br>
+                                        <%=article.seller %>
+                                    </h4>
                                 </div>
                             </td>
                         </tr>
-                    <% }) %>
+                        <% }) %>
                 </table>
             </div>
 

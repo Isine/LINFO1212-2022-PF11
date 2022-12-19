@@ -15,9 +15,38 @@
     <h1 class="title"><a href="/" id="title_link">SyllaExchange</a></h1>
 
     <input type="button" value=🛒 id="basketLogo" onclick="location.href='/basket';">
-    <input type="button" value=<%= user %> id="connexion" onclick="location.href='/login';">
+    <input type="button" value=<%=user %> id="connexion" onclick="location.href='/login';">
 
   </header>
+
+  <script>
+    var cssFile = document.querySelector(':root');
+    const dark = <%=mode %>
+      let variables = {
+        "--main-star": "orange",
+        "--second-star": "yellow",
+        "--dark": "#292929",
+        "--light": "whitesmoke",
+        "--dark-blue": "#005AA7",
+        "--light-blue": "#caf1f4",
+        "--body-color": "#00000000",
+      }
+    if (dark) {
+      variables = {
+        "--main-button": "#006363",
+        "--second-button": "cadetblue",
+        "--dark": "#ffffff",
+        "--light": "#000000",
+        "--dark-blue": "#caf1f4",
+        "--light-blue": "#005AA7",
+        "--body-color": "#1d252b",
+      }
+    }
+
+    for (const [key, value] of Object.entries(variables)) {
+      cssFile.style.setProperty(key, value);
+    }
+  </script>
 </head>
 
 <body>
@@ -28,7 +57,8 @@
     <input type="text" name="title" placeholder="Title" required />
 
     <label for="description"><strong>Description:</strong></label>
-    <textarea class="sell-description" name="description" placeholder="Description" cols="25" rows="5" required></textarea>
+    <textarea class="sell-description" name="description" placeholder="Description" cols="25" rows="5"
+      required></textarea>
 
     <label for="price"><strong>Price:</strong></label>
     <input type="number" name="price" min="0" placeholder="Price" required />
@@ -54,7 +84,7 @@
       <label for="star-e"></label>
     </div>
 
-    <button type="submit">Submit</button>
+    <button class="btn-success" type="submit">Submit</button>
 
   </form>
 

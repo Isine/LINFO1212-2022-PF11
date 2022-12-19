@@ -12,13 +12,42 @@
     <header>
         <a href="/">
             <img class="logo" src="images/logo.png" alt="SyllaExchange-Logo">
-          </a>
-      
-          <h1 class="title"><a href="/" id="title_link">SyllaExchange</a></h1>
-      
-          <input type="button" value=🛒 id="basketLogo" onclick="location.href='/basket';">
-          <input type="button" value=<%= user %> id="connexion" onclick="location.href='/login';">      
+        </a>
+
+        <h1 class="title"><a href="/" id="title_link">SyllaExchange</a></h1>
+
+        <input type="button" value=🛒 id="basketLogo" onclick="location.href='/basket';">
+        <input type="button" value=<%=user %> id="connexion" onclick="location.href='/login';">
     </header>
+
+    <script>
+        var cssFile = document.querySelector(':root');
+        const dark = <%=mode %>
+            let variables = {
+                "--main-star": "orange",
+                "--second-star": "yellow",
+                "--dark": "#292929",
+                "--light": "whitesmoke",
+                "--dark-blue": "#005AA7",
+                "--light-blue": "#caf1f4",
+                "--body-color": "#00000000",
+            }
+        if (dark) {
+            variables = {
+                "--main-button": "#006363",
+                "--second-button": "cadetblue",
+                "--dark": "#ffffff",
+                "--light": "#000000",
+                "--dark-blue": "#caf1f4",
+                "--light-blue": "#005AA7",
+                "--body-color": "#1d252b",
+            }
+        }
+
+        for (const [key, value] of Object.entries(variables)) {
+            cssFile.style.setProperty(key, value);
+        }
+    </script>
 </head>
 
 <body>
@@ -26,31 +55,36 @@
 
     <div class="card">
         <div class="article-image">
-            <img class="book-image" src=<%= image %> alt="Article image">
+            <img class="book-image" src=<%=image %> alt="Article image">
         </div>
 
         <div class="article-infos">
-            <h1 class="book-title"><strong><u><%= title %></u></strong></h1>
+            <h1 class="book-title"><strong><u>
+                        <%= title %>
+                    </u></strong></h1>
             <div class="article-info">
-                <h4 class="book-desc"></h4><%= desc %></h4>
-                <h4 class="book-seller">Selled by: <%= seller %></h4>
-                <h4 class="book-state">State: </h4>
-                <div class="book-stars">
-                    <% for(let i=0; i < rate; i++){ %>
-                        <span class="fa fa-star checked"></span>
-                    <% } %>
-                    
-                    <% for (let j=0; j < 5 - rate; j++) { %>
-                        <span class="fa fa-star"></span>
-                    <% } %>
-                </div>
+                <h4 class="book-desc"></h4>
+                <%= desc %>
+                    </h4>
+                    <h4 class="book-seller">Selled by: <%= seller %>
+                    </h4>
+                    <h4 class="book-state">State: </h4>
+                    <div class="book-stars">
+                        <% for(let i=0; i < rate; i++){ %>
+                            <span class="fa fa-star checked"></span>
+                            <% } %>
+
+                                <% for (let j=0; j < 5 - rate; j++) { %>
+                                    <span class="fa fa-star"></span>
+                                    <% } %>
+                    </div>
             </div>
             <div class="article-price">
                 <h4 class="book-price">Price: <%= price %>€</h4>
                 <form action="" method="post" class="book-buy-button">
-                    <input type="hidden" name="sellerid" value=<%= sellerid %>>
-                    <input type="hidden" name="id" value=<%= id %>>
-                    <input type="hidden" name="price" value=<%= price %>>
+                    <input type="hidden" name="sellerid" value=<%=sellerid %>>
+                    <input type="hidden" name="id" value=<%=id %>>
+                    <input type="hidden" name="price" value=<%=price %>>
                     <input class="buy-button" type="submit" value="Add to basket">
                 </form>
             </div>

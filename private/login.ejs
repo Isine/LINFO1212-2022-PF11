@@ -19,6 +19,35 @@
     <h1 class="title"><a href="/" id="title_link">SyllaExchange</a></h1>
 
   </header>
+
+  <script>
+    var cssFile = document.querySelector(':root');
+    const dark = <%=mode %>
+      let variables = {
+        "--main-star": "orange",
+        "--second-star": "yellow",
+        "--dark": "#292929",
+        "--light": "whitesmoke",
+        "--dark-blue": "#005AA7",
+        "--light-blue": "#caf1f4",
+        "--body-color": "#00000000",
+      }
+    if (dark) {
+      variables = {
+        "--main-button": "#006363",
+        "--second-button": "cadetblue",
+        "--dark": "#ffffff",
+        "--light": "#000000",
+        "--dark-blue": "#caf1f4",
+        "--light-blue": "#005AA7",
+        "--body-color": "#1d252b",
+      }
+    }
+
+    for (const [key, value] of Object.entries(variables)) {
+      cssFile.style.setProperty(key, value);
+    }
+  </script>
 </head>
 
 <body> <!-- inspired from http://frontendfreecode.com/register-login-form-with-tabs-using-bootstrap -->
@@ -78,7 +107,9 @@
 
   <div>
     <h4 class="error">
-      <strong><%= error %></strong>
+      <strong>
+        <%= error %>
+      </strong>
     </h4>
   </div>
 

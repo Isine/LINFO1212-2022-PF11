@@ -1,4 +1,4 @@
-const utilty = {
+const utility = {
     // see https://stackoverflow.com/a/9728530
     compareDictionaries: function (d1, d2) {
         // quick check for the same object
@@ -38,4 +38,4 @@ const utilty = {
     }
 }
 
-module.exports = utilty
+module.exports = utility

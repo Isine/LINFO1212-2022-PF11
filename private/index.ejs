@@ -18,6 +18,35 @@
     <input type="button" value=<%=user %> id="connexion" onclick="location.href='/login';">
 
   </header>
+
+  <script>
+    var cssFile = document.querySelector(':root');
+    const dark = <%=mode %>
+      let variables = {
+        "--main-star": "orange",
+        "--second-star": "yellow",
+        "--dark": "#292929",
+        "--light": "whitesmoke",
+        "--dark-blue": "#005AA7",
+        "--light-blue": "#caf1f4",
+        "--body-color": "#00000000",
+      }
+    if (dark) {
+      variables = {
+        "--main-button": "#006363",
+        "--second-button": "cadetblue",
+        "--dark": "#ffffff",
+        "--light": "#000000",
+        "--dark-blue": "#caf1f4",
+        "--light-blue": "#005AA7",
+        "--body-color": "#1d252b",
+      }
+    }
+
+    for (const [key, value] of Object.entries(variables)) {
+      cssFile.style.setProperty(key, value);
+    }
+  </script>
 </head>
 
 <body>
@@ -48,44 +77,56 @@
         <section class="vertical-articles-container">
           <% articleList.forEach(function(article){ %>
             <article class="book">
-              <img src=<%= article.image %> alt="Syllabus-image">
-              <strong><u><h1 class="vertical-book-price"><%= article.title %></h1 ></u></strong>
-              <h2 class="vertical-book-price"><%= article.price %>€</h2>
+              <img src=<%=article.image %> alt="Syllabus-image">
+              <strong><u>
+                  <h1 class="vertical-book-price">
+                    <%= article.title %>
+                  </h1>
+                </u></strong>
+              <h2 class="vertical-book-price">
+                <%= article.price %>€
+              </h2>
               <button onclick="location.href='/buy?artID=<%= article.id %>';">Buy</button>
             </article>
-          <% }) %>
+            <% }) %>
         </section>
       </div>
-    <% } else { %>
-      <!-- vertical view -->
-      <div class="articles-container">
-        <table cellspacing="10" class="wrapper">
-          <% articleList.forEach(function(article){ %>
-            <tr class="case">
-              <td class="image-cell">
-                <div class="image-container">
-                  <img class="art-image" src=<%= article.image %> alt="article image">
-                </div>
-              </td>
-              <td class="title-cell">
-                <strong><u><h1 class="art-title"><%= article.title %></h1 ></u></strong>
-              </td>
-              <td class="art-elem">
-                <h2 class="art-price"><%= article.price %>€</h2>
-              </td>
-              <td class="art-elem">
-                <div class="art-btn">
-                  <button class="art-buy" onclick="location.href='/buy?artID=<%= article.id %>';">BUY</button>
-                </div>
-              </td>
-            </tr>
-          <% }) %> 
-        </table>
-      </div>
-    <% } %>
-  </div>
-</main>
-      
+      <% } else { %>
+        <!-- vertical view -->
+        <div class="articles-container">
+          <table cellspacing="10" class="wrapper">
+            <% articleList.forEach(function(article){ %>
+              <tr class="case">
+                <td class="image-cell">
+                  <div class="image-container">
+                    <img class="art-image" src=<%=article.image %> alt="article image">
+                  </div>
+                </td>
+                <td class="title-cell">
+                  <strong><u>
+                      <h1 class="art-title">
+                        <%= article.title %>
+                      </h1>
+                    </u></strong>
+                </td>
+                <td class="art-elem">
+                  <h2 class="art-price">
+                    <%= article.price %>€
+                  </h2>
+                </td>
+                <td class="art-elem">
+                  <div class="art-btn">
+                    <button class="art-buy" onclick="location.href='/buy?artID=<%= article.id %>';">BUY</button>
+                  </div>
+                </td>
+              </tr>
+              <% }) %>
+          </table>
+        </div>
+        <% } %>
+          </div>
+  </main>
+
 </body>
 
 </html>

@@ -55,8 +55,23 @@ const upload = multer({
     }
 });
 
-// APP GET
+async function getMode(req) {
+    let currentMode = req.session.mode
 
+    if (!currentMode && req.session.userID) {
+        console.log(currentMode, "first")
+        currentMode = await DBop.GetNightModeByID(req.session.userID)
+        console.log(currentMode, "second")
+
+    }
+
+    // console.log(currentMode)
+    req.session.mode = currentMode
+
+    return currentMode
+}
+
+// APP GET
 app.get('/', async function (req, res, next) {
     let name = "Connexion"
     let viewPref = false;
@@ -65,34 +80,39 @@ app.get('/', async function (req, res, next) {
         viewPref = await DBop.GetHorizontalViewByID(req.session.userID);
     }
 
+    const mode = await getMode(req)
+    // req.session.mode = mode
+
     if (req.query.btn_search === "searching") { // Using search bar
         let research = '%' + req.query.looking_for + '%';
         const researchedInfo = await DBop.GetArticleFromSearchBar(research);
 
-        res.render('index.ejs', { user: name, articleList: researchedInfo, viewPref: viewPref });
+        res.render('index.ejs', { user: name, articleList: researchedInfo, viewPref: viewPref, mode: mode });
 
     } else {
         switch (req.query.tri) { // Sort Mode
             case "name":
-                res.render('index.ejs', { user: name, articleList: await DBop.GetArticlesByName(), viewPref: viewPref });
+                res.render('index.ejs', { user: name, articleList: await DBop.GetArticlesByName(), viewPref: viewPref, mode: mode });
                 break;
 
             case "price":
-                res.render('index.ejs', { user: name, articleList: await DBop.GetArticleByPrice(), viewPref: viewPref });
+                res.render('index.ejs', { user: name, articleList: await DBop.GetArticleByPrice(), viewPref: viewPref, mode: mode });
                 break;
 
             default:
-                res.render('index.ejs', { user: name, articleList: await DBop.GetAllArticleInfo(), viewPref: viewPref });
+                res.render('index.ejs', { user: name, articleList: await DBop.GetAllArticleInfo(), viewPref: viewPref, mode: mode });
                 break;
         }
     }
 });
 
-app.get('/login', function (req, res, next) {
+app.get('/login', async function (req, res, next) {
     if (req.session.userID) { //login page available only when logout
         res.redirect('/profil');
     } else {
-        res.render('login.ejs', { error: "" });
+        const mode = await getMode(req)
+        // req.session.mode = mode
+        res.render('login.ejs', { error: "", mode: mode });
     }
 });
 
@@ -100,6 +120,7 @@ app.get('/profil', async function (req, res, next) {
     if (!req.session.userID) { //profil page available only when connected
         res.redirect('/');
     } else {
+        const mode = await getMode(req)
         let name = await DBop.GetUsernameByID(req.session.userID);
         let money = await DBop.GetMoneyByID(req.session.userID);
         let email = await DBop.GetEmailByID(req.session.userID);
@@ -107,9 +128,9 @@ app.get('/profil', async function (req, res, next) {
         let privateEmail = await DBop.GetPrivateEmailByID(req.session.userID);
         let horizontalView = await DBop.GetHorizontalViewByID(req.session.userID);
 
-        let purchases =  await DBop.GetBoughtArticleOf(req.session.userID);
+        let purchases = await DBop.GetBoughtArticleOf(req.session.userID);
 
-        res.render('profil.ejs', { user: name, money: money, email: email, nightMode: nightMode, privateEmail: privateEmail, horizontalView: horizontalView, purchases: purchases.reverse() });
+        res.render('profil.ejs', { user: name, money: money, email: email, nightMode: nightMode, privateEmail: privateEmail, horizontalView: horizontalView, purchases: purchases.reverse(), mode: mode });
     }
 });
 
@@ -119,10 +140,13 @@ app.get('/sell', async function (req, res, next) {
         res.redirect('/login');
         return
     }
+    const mode = await getMode(req)
+    console.log(mode, "/sell")
+    // req.session.mode = mode
 
     const name = await DBop.GetUsernameByID(req.session.userID);
 
-    res.render('sell.ejs', { user: name });
+    res.render('sell.ejs', { user: name, mode: mode });
 });
 
 app.get('/buy', async function (req, res, next) {
@@ -137,13 +161,16 @@ app.get('/buy', async function (req, res, next) {
         return;
     }
 
+    const mode = await getMode(req)
+    // req.session.mode = mode
+
     await DBop.isArtIDAvailable(artId).then(async available => { // Display only if artID exists
         if (available) {
             await DBop.GetArticleInfoByID(artId).then(async artInfo => {
                 if (artInfo.selled === 0) {
                     sellerID = artInfo.sellerID
                     await DBop.GetUsernameByID(sellerID).then(sellerName => {
-                        res.render('buy.ejs', { user: name, title: artInfo["title"], image: artInfo["image"], desc: artInfo["desc"], seller: sellerName, sellerid: sellerID, rate: artInfo["rate"], price: artInfo["price"], id: artId });
+                        res.render('buy.ejs', { user: name, title: artInfo["title"], image: artInfo["image"], desc: artInfo["desc"], seller: sellerName, sellerid: sellerID, rate: artInfo["rate"], price: artInfo["price"], id: artId, mode: mode });
                     });
                 } else {
                     res.redirect('/');
@@ -160,6 +187,8 @@ app.get('/basket', async function (req, res, next) {
     let money = "Please connect first"
     const error = req.query.error
     let message = ""
+    const mode = await getMode(req)
+    // req.session.mode = mode
     if (error !== undefined) message = "Not enough money"
     if (req.session.userID) {
         name = await DBop.GetUsernameByID(req.session.userID);
@@ -173,7 +202,7 @@ app.get('/basket', async function (req, res, next) {
         totalPrice += element.price
     });
 
-    res.render('basket.ejs', { user: name, articleList: req.session.basketList, totalPrice: totalPrice, money: money, message: message });
+    res.render('basket.ejs', { user: name, articleList: req.session.basketList, totalPrice: totalPrice, money: money, message: message, mode: mode });
 });
 
 // APP POST
@@ -261,8 +290,10 @@ app.post("/profil", async function (req, res) {
             if (req.body.night_mode !== null) {
                 if (req.body.night_mode) {
                     DBop.SetNewNightMode(req.session.userID, 1);
+                    req.session.mode = true
                 } else {
                     DBop.SetNewNightMode(req.session.userID, 0);
+                    req.session.mode = false
                 }
             }
 
