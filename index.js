@@ -58,14 +58,8 @@ const upload = multer({
 async function getMode(req) {
     let currentMode = req.session.mode
 
-    if (!currentMode && req.session.userID) {
-        console.log(currentMode, "first")
-        currentMode = await DBop.GetNightModeByID(req.session.userID)
-        console.log(currentMode, "second")
+    if (!currentMode && req.session.userID) currentMode = await DBop.GetNightModeByID(req.session.userID)
 
-    }
-
-    // console.log(currentMode)
     req.session.mode = currentMode
 
     return currentMode
@@ -141,7 +135,6 @@ app.get('/sell', async function (req, res, next) {
         return
     }
     const mode = await getMode(req)
-    console.log(mode, "/sell")
     // req.session.mode = mode
 
     const name = await DBop.GetUsernameByID(req.session.userID);

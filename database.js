@@ -30,8 +30,8 @@ User.init({
     }
 }, { sequelize, modelName: 'users' });
 
-class Email extends Model { }
-Email.init({
+class UserEmail extends Model { }
+UserEmail.init({
     email: {
         type: DataTypes.TEXT,
         primaryKey: true,
@@ -45,7 +45,7 @@ Email.init({
             key: 'id'
         }
     },
-}, { sequelize, modelName: 'emails' });
+}, { sequelize, modelName: 'useremails' });
 
 class Article extends Model { }
 Article.init({
@@ -140,7 +140,7 @@ const DBOperations = {
             money: 0
         });
 
-        Email.create({
+        UserEmail.create({
             email: email,
             userId: newUser.id
         });
@@ -157,7 +157,7 @@ const DBOperations = {
     },
 
     LoginUser: async function (email, password) {
-        let userIDFromEmail = await sequelize.query("SELECT userId FROM emails WHERE email = ?", { replacements: [email], type: QueryTypes.SELECT });
+        let userIDFromEmail = await sequelize.query("SELECT userId FROM useremails WHERE email = ?", { replacements: [email], type: QueryTypes.SELECT });
 
         if (typeof userIDFromEmail !== 'undefined' && typeof userIDFromEmail[0] !== 'undefined' && typeof userIDFromEmail[0]['userId'] !== 'undefined') {
             let passwordOfID = await sequelize.query("SELECT password FROM users WHERE id = ?", { replacements: [userIDFromEmail[0]['userId']], type: QueryTypes.SELECT });
@@ -173,7 +173,7 @@ const DBOperations = {
 
     CheckUniqueIDs: async function (username, email) { //check unique email and username
         const existingUsernames = await sequelize.query("SELECT COUNT(*) FROM users WHERE username = ?", { replacements: [username], type: QueryTypes.SELECT })
-        const existingEmails = await sequelize.query("SELECT COUNT(*) FROM emails WHERE email = ?", { replacements: [email], type: QueryTypes.SELECT })
+        const existingEmails = await sequelize.query("SELECT COUNT(*) FROM useremails WHERE email = ?", { replacements: [email], type: QueryTypes.SELECT })
 
         let amountUsername = JSON.stringify(existingUsernames[0]).replace(/[^0-9]*/g, '');
         let amountEmail = JSON.stringify(existingEmails[0]).replace(/[^0-9]*/g, '');
@@ -194,7 +194,7 @@ const DBOperations = {
     },
 
     GetEmailByID: async function (id) {
-        const emailFromId = await sequelize.query("SELECT email FROM emails WHERE userId = ?", { replacements: [id], type: QueryTypes.SELECT });
+        const emailFromId = await sequelize.query("SELECT email FROM useremails WHERE userId = ?", { replacements: [id], type: QueryTypes.SELECT });
 
         if (typeof emailFromId !== 'undefined' && typeof emailFromId[0] !== 'undefined' && typeof emailFromId[0]['email'] !== 'undefined') {
             return emailFromId[0]["email"];
@@ -243,7 +243,7 @@ const DBOperations = {
     },
 
     SetNewEmail: async function (userID, newEmail) {
-        await Email.update(
+        await UserEmail.update(
             { email: newEmail },
             { where: { userId: userID } }
         );
@@ -390,7 +390,7 @@ const DBOperations = {
             return sellerUsername[0]["username"]
         }
 
-        let sellerEmail = await sequelize.query("SELECT email FROM emails WHERE userId = ?", { replacements: [sellerID[0]["userId"]], type: QueryTypes.SELECT });
+        let sellerEmail = await sequelize.query("SELECT email FROM useremails WHERE userId = ?", { replacements: [sellerID[0]["userId"]], type: QueryTypes.SELECT });
         return sellerEmail[0]["email"]
     },
 
@@ -434,7 +434,7 @@ const DBOperations = {
             where: { id: artID }
         }),
 
-        await Email.destroy({
+        await UserEmail.destroy({
             where: { userId: userID }
         }),
 

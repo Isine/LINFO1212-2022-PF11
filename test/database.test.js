@@ -142,7 +142,7 @@ describe("SetArticleBuyer and GetBoughtArticleOf", () => {
         await DBOperations.SetArticleBuyer(__DEV__.artID, __DEV__.id);
         const articles = await DBOperations.GetBoughtArticleOf(__DEV__.id);
 
-        expect(articles).toEqual([{"id": __DEV__.artID}]);
+        expect(articles[0]["id"]).toEqual(__DEV__.artID);
     })
 })
 
