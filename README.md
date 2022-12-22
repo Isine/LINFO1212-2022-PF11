@@ -21,6 +21,8 @@ Maintenant, créez un dossier qui contindera tout les fichiers sur site. Ouvrez 
 
 Lorsque l'installation est terminer, il vous suffit d'executer la commande: "node index.js" et de vous rendre sur la page "https://localhost:8080/". Notez que votre navigateur peut vous indiquer que le site n'est pas sécurisé car le certificat n’a pas été créé par une autorité reconnue. Il ne vous reste plus qu'a profiter du site.
 
+Note: Pour lancer, les tests, il suffit de lancer la commande 'npm test' à la place de la commande "node index.js".
+
 ## Fichiers du site :
 - Dossier "private" contient les pages 'ejs', le fichier 'css', le dossier "images" ainsi que des scripts utiles au site.
 - Dossier "Images" dans le dossier "private" contient toutes les images du site.
